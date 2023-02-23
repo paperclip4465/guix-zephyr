@@ -158,7 +158,7 @@ Below is an example bootloader which targets the =frdm_k64f=.
 		;; Use special dev key instead of production
 		(local-file "ecdsap256-dev.pem")
 		#:extra-zephyr-modules (list hal-cmsis hal-nxp)
-		#:zephyr-base zephyr
+		#:zephyr-base zephyr-3.1
 		#:extra-configure-flags
 		'(;; k64 doesn't have fancy crypto hardware
 		  ;; so we cannot use RSA keys.
