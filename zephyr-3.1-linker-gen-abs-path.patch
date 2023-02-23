@@ -1,0 +1,16 @@
+diff --git a/cmake/modules/extensions.cmake b/cmake/modules/extensions.cmake
+index 506b1e7e..d3ac7d91 100644
+--- a/cmake/modules/extensions.cmake
++++ b/cmake/modules/extensions.cmake
+@@ -1246,9 +1246,10 @@ function(zephyr_linker_sources location)
+ 
+     # Find the relative path to the linker file from the include folder.
+     file(RELATIVE_PATH relpath ${ZEPHYR_BASE}/include ${path})
++    get_filename_component(abspath "${relpath}" REALPATH BASE_DIR "${ZEPHYR_BASE}/include")
+ 
+     # Create strings to be written into the file
+-    set (include_str "/* Sort key: \"${SORT_KEY}\" */#include \"${relpath}\"")
++    set (include_str "/* Sort key: \"${SORT_KEY}\" */#include \"${abspath}\"")
+ 
+     # Add new line to existing lines, sort them, and write them back.
+     file(STRINGS ${snippet_path} lines) # Get current lines (without newlines).
