@@ -32,7 +32,7 @@ Add the following to your ~channels.scm~
 	  ;; Enable signature verification:
 	  (introduction
 	   (make-channel-introduction
-	    "e8d0ab91176381a6e93b5d0457814d9d84a4104e"
+	    "ae031be42d5871798f5d7bf4cbcba996e716a35a"
 	    (openpgp-fingerprint
 	     "089F 0E56 0087 9656 C463  691A 3811 C00D C428 5E27"))))
 	 %default-channels)
