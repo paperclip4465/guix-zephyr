@@ -1,0 +1,168 @@
+* guix-zephyr
+
+This channel provides a framework for using Guix as a West replacement
+for managing ZephyrRTOS based projects.
+
+* Why?
+
+Guix provides a complete model of the system and solves some of the problems
+the Zephyr Project is suffering from:
+
+1. *A fully (unprivilaged) bootstrapped build environment*, including
+   python modules, which results in 100% reproducible builds. The
+   project itself takes a lot of care to ensure reproducibility but
+   because they cannot control the universe there are limits to what
+   they can guarentee. Guix /can/ control the universe and is way more
+   extensible than West.
+
+2. *Smaller Development Environments*, when West manages a Zephyr
+   workspace it pulls down over 3GB of modules, most of which are not
+   required for your project. Guix knows exactly what is required and
+   will include only what is required into the environment.
+
+
+* Installation
+
+Add the following to your ~channels.scm~
+
+#+BEGIN_SRC scheme
+  (cons* (channel
+	  (name 'guix-zephyr)
+	  (url "https://github.com/paperclip4465/guix-zephyr")
+	  ;; Enable signature verification:
+	  (introduction
+	   (make-channel-introduction
+	    "e8d0ab91176381a6e93b5d0457814d9d84a4104e"
+	    (openpgp-fingerprint
+	     "089F 0E56 0087 9656 C463  691A 3811 C00D C428 5E27"))))
+	 %default-channels)
+#+END_SRC
+
+* Usage
+
+This channel provides the ~zephyr-build-system~ and ~zephyr-module-build-system~.
+The ~zephyr-build-system~ contains a bootstrapped version of the [[https://github.com/zephyrproject-rtos/sdk-ng][zephyr sdk]].
+Currently only ~arm-zephyr-eabi~ sans libstdc++ is supported. (please help!)
+
+** Firmware
+
+Firmware represent the leaf nodes in our deployment graph.
+These are the projects which actually provide ~main~.
+Firmware can be defined like so.
+
+#+BEGIN_SRC scheme
+  (use-modules
+   (guix packages)
+   (gnu packages)
+   (zephyr packages zephyr)
+   (zephyr packages zephyr-xyz))
+
+  (define-public zephyr-hello-world-frdm-k64f
+    (package
+      (name "zephyr-hello-world-frdm-k64f")
+      (version (package-version zephyr))
+      (home-page "https://zephyrproject.org")
+      (source (file-append (package-source zephyr)
+			   "/samples/hello_world"))
+      (build-system zephyr-build-system)
+      (arguments
+       '(#:configure-flags '("-DBOARD=frdm_k64f")))
+      (outputs '("out" "debug"))
+      (inputs
+       (list hal-cmsis
+	     hal-nxp))
+      (synopsis "Hello world example from Zephyr Project")
+      (description "Sample package for zephyr project")
+      (license license:apsl2)))
+#+END_SRC
+
+Firmware needs to have both outputs as listed above to avoid
+referencing the build environment in it's store output.
+
+** Modules
+
+Third party modules provide code required to run the system such as
+board definitions, drivers, misc libraries, you name it. Anything that
+does not provide ~main~ is likely a module.
+
+#+BEGIN_SRC scheme
+  (define-public hal-nxp
+    (let ((module-path "/modules/hal/nxp"))
+      (package
+	(name "hal-nxp")
+	(version "3.1.0")
+	(home-page "https://nxp.com")
+	(source (origin
+		  (method git-fetch)
+		  (uri (git-reference
+			(url "https://github.com/zephyrproject-rtos/hal_nxp")
+			(commit "708c95825b0d5279620935a1356299fff5dfbc6e")))
+		  (file-name (git-file-name name version))
+		  (sha256
+		   (base32 "1c0i26bpk6cyhr1q4af183jclfmxshv4d15i7k3cz7brzb12m8q1"))))
+	(build-system zephyr-module-build-system)
+	(arguments `(#:workspace-path ,module-path))
+
+	;; XXX: This is a hack for userspace usability.
+	;; On the build side we can walk the inputs and discover which ones are
+	;; zephyr modules. In the userspace you need pass ZEPHYR_MODULES=$ZEPHYR_MODULES
+	;; this is annoying but the build system does not respect the
+	;; environment variable.  If someone knows how to fix this that
+	;; would be helpful! Until then just put it in the makefile.
+	(native-search-paths
+	 (list (search-path-specification
+		(variable "ZEPHYR_MODULES")
+		(files `(,(string-append %zephyr-workspace-name module-path)))
+		(separator ";"))))
+	(synopsis "Zephyr module for NXP Hardware Abstraction Layer")
+	(description "Provides sources for NXP HAL zephyr module")
+	(license license:bsd-3))))
+#+END_SRC
+
+The ~zephyr-module-build-system~ is just a specialized
+~copy-build-system~.
+It tries to mimic a West style workspace in the
+installation profile and this path is a subdirectory in that
+workspace.  In this example the NXP HAL ends up in the same spot as is
+described in =$ZEPHYR_BASE/west.yml=.
+
+** MCUBoot
+
+Building MCUBoot can be tough.
+MCUBoot needs to know about the board so it can initialize the
+hardware and validate/swap images. The board definition provides the
+parition layout which both MCUBoot and the application must agree on.
+
+MCUBoot also needs to be provided a key so it can validate new images.
+It also has some dependencies on Zephyr itself being both a module AND
+an application.
+
+*** MCUBoot the Module
+
+Why is MCUBoot a module? Because the application also needs to know
+about it so it can work with the images and mark them for upgrade in
+the first place.
+
+Applications which rely on MCUBoot should include ~zephyr-mcuboot~
+in their input list.
+
+*** MCUBoot the Bootloader
+
+MCUBoot is itself a zephyr application.
+The procedure ~make-mcuboot~ returns a package which has been
+specialized for a given board.
+
+Below is an example bootloader which targets the =frdm_k64f=.
+#+BEGIN_SRC scheme
+  (make-mcuboot "frdm_k64f"
+		;; Use special dev key instead of production
+		(local-file "ecdsap256-dev.pem")
+		#:extra-zephyr-modules (list hal-cmsis hal-nxp)
+		#:zephyr-base zephyr
+		#:extra-configure-flags
+		'(;; k64 doesn't have fancy crypto hardware
+		  ;; so we cannot use RSA keys.
+		  "-DCONFIG_BOOT_SIGNATURE_TYPE_ECDSA_P256=y"
+		  "-DCONFIG_BOOT_SIGNATURE_TYPE_RSA=n"
+		  "-DCONFIG_BOOT_ECDSA_TINYCRYPT=y"))
+#+END_SRC
