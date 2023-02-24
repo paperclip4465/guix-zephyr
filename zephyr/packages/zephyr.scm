@@ -482,7 +482,7 @@ as host tools like dtc, openocd, and qemu.")
 
 
 (define-public zephyr-3.2.0-rc3
-  (package (inherit zephyr)
+  (package (inherit zephyr-3.1)
     (version "3.2.0-rc3")
     (source (origin (method git-fetch)
 		    (uri (git-reference

@@ -158,7 +158,7 @@ provides a secure bootloader that enables easy software upgrade.")
 
 (define* (make-mcuboot board key #:key
 		       (mcuboot zephyr-mcuboot)
-		       (zephyr-base zephyr)
+		       (zephyr-base zephyr-3.1)
 		       (extra-zephyr-modules '())
 		       (extra-configure-flags '()))
   "Create a variant of MCUBOOT configured for BOARD and KEY.
@@ -200,9 +200,9 @@ or a file-like object to be used as an overlay."
 (define-public zephyr-hello-world-frdm-k64f
   (package
     (name "zephyr-hello-world-frdm-k64f")
-    (version (package-version zephyr))
+    (version (package-version zephyr-3.1))
     (home-page "https://zephyrproject.org")
-    (source (file-append (package-source zephyr)
+    (source (file-append (package-source zephyr-3.1)
 			 "/samples/hello_world"))
     (build-system zephyr-build-system)
     (arguments
