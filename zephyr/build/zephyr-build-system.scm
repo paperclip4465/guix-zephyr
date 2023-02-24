@@ -76,15 +76,15 @@ not accessible."
       (format #t "running 'cmake' with arguments ~s~%" args)
       (apply invoke "cmake" args))))
 
-(define* (install #:key outputs #:allow-other-keys)
+(define* (install #:key name outputs #:allow-other-keys)
   (let* ((out (string-append (assoc-ref outputs "out") "/firmware"))
 	 (dbg (string-append (assoc-ref outputs "debug") "/share/zephyr")))
     (mkdir-p out)
     (mkdir-p dbg)
     (copy-file "zephyr/.config" (string-append dbg "/config"))
-    (copy-file "zephyr/zephyr.map" (string-append dbg "/zephyr.map"))
-    (copy-file "zephyr/zephyr.elf" (string-append out "/zephyr.elf"))
-    (copy-file "zephyr/zephyr.bin" (string-append out "/zephyr.bin"))))
+    (copy-file "zephyr/zephyr.map" (string-append dbg "/" name ".map"))
+    (copy-file "zephyr/zephyr.elf" (string-append out "/" name ".elf"))
+    (copy-file "zephyr/zephyr.bin" (string-append out "/" name ".bin"))))
 
 (define %standard-phases
   (modify-phases cmake:%standard-phases

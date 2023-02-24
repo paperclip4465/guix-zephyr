@@ -102,6 +102,7 @@ provides a 'CMakeLists.txt' file as its build system."
 	  (use-modules #$@(sexp->gexp modules))
 	  #$(with-build-variables inputs outputs
 	      #~(zephyr-build #:source #+source
+			      #:name #$name
 			      #:system #$system
 			      #:outputs %outputs
 			      #:inputs %build-inputs
