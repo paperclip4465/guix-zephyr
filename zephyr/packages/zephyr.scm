@@ -494,6 +494,8 @@ as host tools like dtc, openocd, and qemu.")
 		    (patches
 		     (search-patches "zephyr-3.1-linker-gen-abs-path.patch"))))))
 
+(define-public zephyr zephyr-3.1)
+
 (define-public imgtool
   (package
     (name "imgtool")
