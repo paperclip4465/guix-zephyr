@@ -163,38 +163,33 @@ provides a secure bootloader that enables easy software upgrade.")
 		       (extra-configure-flags '()))
   "Create a variant of MCUBOOT configured for BOARD and KEY.
 KEY is the PEM signing key that will be expected to sign application
-binaries. EXTRA-CONFIGURE-FLAGS can be given as a string, a list of strings,
-or a file-like object to be used as an overlay."
-
-  (define (parse-extra-flags)
-    (cond
-     ((file-like? extra-configure-flags)
-      #~(string-append "-DOVERLAY_CONFIG=" #$extra-configure-flags))
-     ((string? extra-configure-flags) (list extra-configure-flags))
-     ((or (nil? extra-configure-flags)
-	  (pair? extra-configure-flags)) extra-configure-flags)))
+binaries. EXTRA-CONFIGURE-FLAGS can be given as a string or a list of strings."
 
   (package (inherit mcuboot)
-    (name (string-append (package-name mcuboot) "-" board))
-    (build-system zephyr-build-system)
-    (inputs extra-zephyr-modules)
-    (native-inputs
-     `(("imgtool" ,imgtool)
-       ("signing-key" ,key)))
-    (outputs '("out" "debug"))
-    (arguments
-     `(#:phases ,#~(modify-phases %standard-phases
-		     (add-before 'configure 'cd-to-source
-		       (lambda* _
-			 (chdir "boot/zephyr")
-			 #t)))
-       #:configure-flags
-       (append (list (string-append  "-DBOARD=" ,board)
-		     (format #f "-DCONFIG_BOOT_SIGNATURE_KEY_FILE=~s"
-			     (assoc-ref %build-inputs "signing-key")))
-	       ',extra-configure-flags)))
-    (description (format #f "~a~&This bootloader has been configured for ~a."
-			 (package-description mcuboot) board))))
+	   (name (string-append (package-name mcuboot) "-" board))
+	   (build-system zephyr-build-system)
+	   (inputs extra-zephyr-modules)
+	   (native-inputs
+	    `(("imgtool" ,imgtool)
+	      ("signing-key" ,key)))
+	   (outputs '("out" "debug"))
+	   (arguments
+	    `(#:phases (modify-phases %standard-phases
+			 (add-before 'configure 'cd-to-source
+			   (lambda* _
+			     (chdir "boot/zephyr")
+			     #t)))
+	      #:configure-flags
+	      (append (list (string-append  "-DBOARD=" ,board)
+			    (format #f "-DCONFIG_BOOT_SIGNATURE_KEY_FILE=~s"
+				    (assoc-ref %build-inputs "signing-key")))
+		      ',(cond
+			 ((string? extra-configure-flags) `(list ,extra-configure-flags))
+			 ((pair? extra-configure-flags) extra-configure-flags)
+			 (else (error "Bad extra configure flags for mcuboot ~a."
+				      extra-configure-flags))))))
+	   (description (format #f "~a~&This bootloader has been configured for ~a."
+				(package-description mcuboot) board))))
 
 
 (define-public zephyr-hello-world-frdm-k64f
@@ -234,7 +229,7 @@ or a file-like object to be used as an overlay."
 		(local-file "../../ecdsap256-dev.pem")
 		#:extra-zephyr-modules (list hal-cmsis hal-nxp)
 		#:extra-configure-flags
-		'( ;; k64 doesn't have fancy crypto hardware
+		'(;; k64 doesn't have fancy crypto hardware
 		  ;; so we cannot use RSA keys.
 		  "-DCONFIG_BOOT_SIGNATURE_TYPE_ECDSA_P256=y"
 		  "-DCONFIG_BOOT_SIGNATURE_TYPE_RSA=n"
