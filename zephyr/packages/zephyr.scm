@@ -475,7 +475,10 @@ as host tools like dtc, openocd, and qemu.")
       (native-search-paths
        (list (search-path-specification
 	      (variable "ZEPHYR_BASE")
-	      (files '("zephyr-workspace/zephyr")))))
+	      (files '("zephyr-workspace/zephyr")))
+	     (search-path-specification
+	      (variable "CMAKE_PREFIX_PATH")
+	      (files '("zephyr-workspace/zephyr/share/zephyr-package/cmake")))))
       (synopsis "Source code for zephyr rtos")
       (description "Zephyr rtos source code.")
       (license license:apsl2))))
