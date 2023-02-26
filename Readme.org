@@ -26,16 +26,18 @@ the Zephyr Project is suffering from:
 Add the following to your ~channels.scm~
 
 #+BEGIN_SRC scheme
-  (cons* (channel
-	  (name 'guix-zephyr)
-	  (url "https://github.com/paperclip4465/guix-zephyr")
-	  ;; Enable signature verification:
-	  (introduction
-	   (make-channel-introduction
-	    "ae031be42d5871798f5d7bf4cbcba996e716a35a"
-	    (openpgp-fingerprint
-	     "089F 0E56 0087 9656 C463  691A 3811 C00D C428 5E27"))))
-	 %default-channels)
+  (cons*
+   (channel
+    (name 'guix-zephyr)
+    (url "https://github.com/paperclip4465/guix-zephyr")
+    ;; Enable signature verification:
+    (introduction
+     (make-channel-introduction
+      "a0146bb3d13920074d40ed6d6d53321b17e267fb"
+      (openpgp-fingerprint
+       "089F 0E56 0087 9656 C463  691A 3811 C00D C428 5E27"))))
+
+   %default-channels)
 #+END_SRC
 
 * Usage
