@@ -54,10 +54,12 @@
 		(sdk default-zephyr-sdk)
 		(ninja default-ninja)
 		(cmake default-cmake)
+		(bin-name "zephyr")
 		#:allow-other-keys
 		#:rest arguments)
   "Return a bag for NAME."
-  (define private-keywords `(#:zephyr #:inputs #:native-inputs #:target))
+  (define private-keywords `(#:zephyr #:inputs #:native-inputs #:target
+			     #:sdk #:ninja #:cmake))
   (bag
     (name name)
     (system system)
@@ -79,6 +81,7 @@
 (define* (zephyr-build name inputs
 		       #:key guile source
 		       board
+		       bin-name
 		       (outputs '("out" "debug")) (configure-flags ''())
 		       (search-paths '())
 		       (make-flags ''())
@@ -107,6 +110,7 @@ provides a 'CMakeLists.txt' file as its build system."
 			      #:outputs %outputs
 			      #:inputs %build-inputs
 			      #:board #$board
+			      #:bin-name #$bin-name
 			      #:search-paths '#$(sexp->gexp
 						 (map search-path-specification->sexp
 						      search-paths))

@@ -46,6 +46,7 @@ not accessible."
   (format #f "-DZEPHYR_MODULES='~{~a~^;~}'" modules))
 
 (define* (configure #:key outputs (configure-flags '())
+		    board
 		    inputs (out-of-source? #t)
 		    build-type
 		    #:allow-other-keys)
@@ -70,21 +71,24 @@ not accessible."
 			'())
 		  ;; enable verbose output from builds
 		  "-DCMAKE_VERBOSE_MAKEFILE=ON"
+		  ,@(if board
+			(list (string-append "-DBOARD=" board))
+			'())
 		  ,(zephyr-modules-cmake-argument
 		    (find-zephyr-modules (map cdr inputs)))
 		  ,@configure-flags)))
       (format #t "running 'cmake' with arguments ~s~%" args)
       (apply invoke "cmake" args))))
 
-(define* (install #:key name outputs #:allow-other-keys)
+(define* (install #:key bin-name outputs inputs #:allow-other-keys)
   (let* ((out (string-append (assoc-ref outputs "out") "/firmware"))
 	 (dbg (string-append (assoc-ref outputs "debug") "/share/zephyr")))
     (mkdir-p out)
     (mkdir-p dbg)
     (copy-file "zephyr/.config" (string-append dbg "/config"))
-    (copy-file "zephyr/zephyr.map" (string-append dbg "/" name ".map"))
-    (copy-file "zephyr/zephyr.elf" (string-append out "/" name ".elf"))
-    (copy-file "zephyr/zephyr.bin" (string-append out "/" name ".bin"))))
+    (copy-file "zephyr/zephyr.map" (string-append dbg "/" bin-name ".map"))
+    (copy-file "zephyr/zephyr.elf" (string-append out "/" bin-name ".elf"))
+    (copy-file "zephyr/zephyr.bin" (string-append out "/" bin-name ".bin"))))
 
 (define %standard-phases
   (modify-phases cmake:%standard-phases

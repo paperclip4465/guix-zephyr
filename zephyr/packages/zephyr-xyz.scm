@@ -179,9 +179,11 @@ binaries. EXTRA-CONFIGURE-FLAGS can be given as a string or a list of strings."
 			   (lambda* _
 			     (chdir "boot/zephyr")
 			     #t)))
+	      #:bin-name "mcuboot"
+	      #:board ,board
+	      #:zephyr ,zephyr-base
 	      #:configure-flags
-	      (append (list (string-append  "-DBOARD=" ,board)
-			    (format #f "-DCONFIG_BOOT_SIGNATURE_KEY_FILE=~s"
+	      (append (list (format #f "-DCONFIG_BOOT_SIGNATURE_KEY_FILE=~s"
 				    (assoc-ref %build-inputs "signing-key")))
 		      ',(cond
 			 ((string? extra-configure-flags) `(list ,extra-configure-flags))
