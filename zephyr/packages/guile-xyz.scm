@@ -13,7 +13,7 @@
   #:use-module (gnu packages texinfo))
 
 (define-public guile-mcumgr
-  (let ((commit "a1a821eeb816d579fa7b3ce940e194f514856b7d"))
+  (let ((commit "ad30bbdeb6724b89af97adfbb297708290bd8c1a"))
     (package
       (name "guile-mcumgr")
       (version (git-version "0.0.1" "0" commit))
@@ -24,7 +24,7 @@
 			    (commit commit)))
 		      (file-name (git-file-name name version))
 		      (sha256
-		       (base32 "0d96lffcbg4dr13mj9dzn2ir03g82riwv74mj3midx385h3p419r"))))
+		       (base32 "0ckiirzl8aad1dxnpc48aln1j6l7y0j66sjrh189fm4qwzdiz18y"))))
       (build-system gnu-build-system)
       (arguments
        `(#:modules
