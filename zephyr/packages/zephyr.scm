@@ -80,6 +80,7 @@
 			 #:xbinutils arm-zephyr-eabi-binutils)))
     (package
       (inherit xgcc)
+      (name "gcc-arm-zephyr-eabi")
       (version "12.1.0")
       (source (origin (method git-fetch)
 		      (uri (git-reference
