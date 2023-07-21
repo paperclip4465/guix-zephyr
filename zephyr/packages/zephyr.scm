@@ -46,10 +46,10 @@
 	       (file-name (git-file-name name version))
 	       (sha256 (base32 "0ylnl48jj5jk3jrmvfx5zf8byvwg7g7my7jwwyqw3a95qcyh0isr"))))
       (arguments
-       `(#:tests? #f
-	 ,@(substitute-keyword-arguments (package-arguments xbinutils)
-	     ((#:configure-flags flags)
-	      `(cons "--program-prefix=arm-zephyr-eabi-" ,flags)))))
+       (substitute-keyword-arguments (package-arguments xbinutils)
+	 ((#:tests? tests '()) #f)
+	 ((#:configure-flags flags)
+	  #~(cons "--program-prefix=arm-zephyr-eabi-" #$flags))))
       (native-inputs
        (append
 	(list texinfo
