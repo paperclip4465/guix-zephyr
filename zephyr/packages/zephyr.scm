@@ -367,9 +367,8 @@ language is C.")
 	     (file-name (git-file-name name version))
 	     (sha256 (base32 "082lh9p3jcqnmk31yr7zmd1yrpp4z49xljg06rrfipk8x0z2sv23"))))
     (native-inputs
-     `(("bison" ,bison)
-       ("flex" ,flex)
-       ,@(package-native-inputs gcc-12)))
+     (modify-inputs (package-native-inputs gdb-12)
+       (append bison flex)))
     (arguments
      (substitute-keyword-arguments (package-arguments gdb-12)
        ((#:configure-flags flags)
