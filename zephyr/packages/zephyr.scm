@@ -99,48 +99,48 @@
       (arguments
        (substitute-keyword-arguments (package-arguments xgcc)
 	 ((#:phases phases)
-	  `(modify-phases ,phases
-	     (add-after 'unpack 'fix-genmultilib
-	       (lambda _
-		 (substitute* "gcc/genmultilib"
-		   (("#!/bin/sh") (string-append "#!" (which "sh"))))
-		 #t))
-	     (add-after 'set-paths 'augment-CPLUS_INCLUDE_PATH
-	       (lambda* (#:key inputs #:allow-other-keys)
-		 (let ((gcc (assoc-ref inputs  "gcc")))
-		   ;; Remove the default compiler from CPLUS_INCLUDE_PATH to
-		   ;; prevent header conflict with the GCC from native-inputs.
-		   (setenv "CPLUS_INCLUDE_PATH"
-			   (string-join
-			    (delete (string-append gcc "/include/c++")
-				    (string-split (getenv "CPLUS_INCLUDE_PATH")
-						  #\:))
-			    ":"))
-		   (format #t
-			   "environment variable `CPLUS_INCLUDE_PATH' changed to ~a~%"
-			   (getenv "CPLUS_INCLUDE_PATH"))
-		   #t)))))
+	  #~(modify-phases #$phases
+	      (add-after 'unpack 'fix-genmultilib
+		(lambda _
+		  (substitute* "gcc/genmultilib"
+		    (("#!/bin/sh") (string-append "#!" (which "sh"))))
+		  #t))
+	      (add-after 'set-paths 'augment-CPLUS_INCLUDE_PATH
+		(lambda* (#:key inputs #:allow-other-keys)
+		  (let ((gcc (assoc-ref inputs  "gcc")))
+		    ;; Remove the default compiler from CPLUS_INCLUDE_PATH to
+		    ;; prevent header conflict with the GCC from native-inputs.
+		    (setenv "CPLUS_INCLUDE_PATH"
+			    (string-join
+			     (delete (string-append gcc "/include/c++")
+				     (string-split (getenv "CPLUS_INCLUDE_PATH")
+						   #\:))
+			     ":"))
+		    (format #t
+			    "environment variable `CPLUS_INCLUDE_PATH' changed to ~a~%"
+			    (getenv "CPLUS_INCLUDE_PATH"))
+		    #t)))))
 	 ((#:configure-flags flags)
-	  `(append (list "--enable-multilib"
-			 "--with-newlib"
-			 "--with-multilib-list=rmprofile"
-			 "--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
-			 "--enable-plugins"
-			 "--disable-decimal-float"
-			 "--disable-libffi"
-			 "--disable-libgomp"
-			 "--disable-libmudflap"
-			 "--disable-libquadmath"
-			 "--disable-libssp"
-			 "--disable-libstdcxx-pch"
-			 "--disable-nls"
-			 "--disable-shared"
-			 "--disable-threads"
-			 "--disable-tls"
-			 "--with-gnu-ld"
-			 "--with-gnu-as"
-			 "--enable-initfini-array")
-		   (delete "--disable-multilib" ,flags)))))
+	  #~(append (list "--enable-multilib"
+			  "--with-newlib"
+			  "--with-multilib-list=rmprofile"
+			  "--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
+			  "--enable-plugins"
+			  "--disable-decimal-float"
+			  "--disable-libffi"
+			  "--disable-libgomp"
+			  "--disable-libmudflap"
+			  "--disable-libquadmath"
+			  "--disable-libssp"
+			  "--disable-libstdcxx-pch"
+			  "--disable-nls"
+			  "--disable-shared"
+			  "--disable-threads"
+			  "--disable-tls"
+			  "--with-gnu-ld"
+			  "--with-gnu-as"
+			  "--enable-initfini-array")
+		    (delete "--disable-multilib" #$flags)))))
       (native-search-paths
        (list (search-path-specification
 	      (variable "CROSS_C_INCLUDE_PATH")
