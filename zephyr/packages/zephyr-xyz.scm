@@ -12,166 +12,52 @@
   #:use-module (zephyr build-system zephyr-module)
   #:export (make-mcuboot))
 
-
-
-(define-public hal-cmsis-3.2.0-rc3
-  (let ((commit "093de61c2a7d12dc9253daf8692f61f793a9254a"))
-    (package (inherit hal-cmsis)
-      (version (git-version "5.8.0" "3.2.0-rc3" commit))
-      (source (origin
-		(method git-fetch)
-		(uri (git-reference
-		      (url "https://github.com/zephyrproject-rtos/cmsis")
-		      (commit commit)))
-		(file-name (git-file-name "hal-cmsis" version))
-		(sha256
-		 (base32 "0354fz5lb2vg3zj0ciwjmz4slh3s5rnvkmixikn36m51wk8vcq1j")))))))
-
-
-(define-public zcbor-0.5.1
-  (let ((commit "a0d6981f14d4001d6f0d608d1a427f9bc6bb6d02"))
-    (package
-      (inherit zcbor)
-      (version (git-version "0.5.1" "3.2.0-rc3" commit))
-      (source (origin
-		(method git-fetch)
-		(uri (git-reference
-		      (url "https://github.com/zephyrproject-rtos/zcbor")
-		      (commit commit)))
-		(file-name (git-file-name "zcbor" version))
-		(sha256
-		 (base32 "03xz79pi210kny55ks9cyr8i9m68f7kla3nv5zk2afg59ms0nwdc")))))))
-
-
-
-(define* (make-mcuboot board key #:key
-		       (mcuboot zephyr-mcuboot)
-		       (zephyr-base zephyr-3.1)
-		       (extra-zephyr-modules '())
-		       (extra-configure-flags '()))
-  "Create a variant of MCUBOOT configured for BOARD and KEY.
-KEY is the PEM signing key that will be expected to sign application
-binaries. EXTRA-CONFIGURE-FLAGS can be given as a string or a list of strings."
-
-  (package (inherit mcuboot)
-	   (name (string-append (package-name mcuboot) "-" board))
-	   (build-system zephyr-build-system)
-	   (inputs extra-zephyr-modules)
-	   (native-inputs
-	    `(("imgtool" ,imgtool)
-	      ("signing-key" ,key)))
-	   (outputs '("out" "debug"))
-	   (arguments
-	    `(#:phases (modify-phases %standard-phases
-			 (add-before 'configure 'cd-to-source
-			   (lambda* _
-			     (chdir "boot/zephyr")
-			     #t)))
-	      #:bin-name "mcuboot"
-	      #:board ,board
-	      #:zephyr ,zephyr-base
-	      #:configure-flags
-	      (append (list (format #f "-DCONFIG_BOOT_SIGNATURE_KEY_FILE=~s"
-				    (assoc-ref %build-inputs "signing-key")))
-		      ',(cond
-			 ((string? extra-configure-flags) `(list ,extra-configure-flags))
-			 ((pair? extra-configure-flags) extra-configure-flags)
-			 (else (error "Bad extra configure flags for mcuboot ~a."
-				      extra-configure-flags))))))
-	   (description (format #f "~a~&This bootloader has been configured for ~a."
-				(package-description mcuboot) board))))
-
-
-(define-public zephyr-hello-world-frdm-k64f
-  (package
-    (name "zephyr-hello-world-frdm-k64f")
-    (version (package-version zephyr-3.1))
-    (home-page "https://zephyrproject.org")
-    (source (file-append (package-source zephyr-3.1)
-			 "/samples/hello_world"))
-    (build-system zephyr-build-system)
-    (arguments
-     '(#:configure-flags '("-DBOARD=frdm_k64f")))
-    (outputs '("out" "debug"))
-    (inputs
-     (list hal-cmsis
-	   hal-nxp))
-    (synopsis "Hello world example from Zephyr Project")
-    (description "Sample package for zephyr project")
-    (license license:apsl2)))
-
-
-(define-public zephyr-hello-world-newlib-frdm-k64f
-  (package
-    (inherit zephyr-hello-world-frdm-k64f)
-    (name "zephyr-hello-world-newlib-frdm-k64f")
-    (arguments
-     (substitute-keyword-arguments (package-arguments zephyr-hello-world-frdm-k64f)
-       ((#:configure-flags flags)
-	`(append
-	  '("-DCONFIG_MINIMAL_LIBC=n"
-	    "-DCONFIG_NEWLIB_LIBC=y")
-	  ,flags))))))
-
-(define-public mcuboot-frdm-k64f
-  (make-mcuboot "frdm_k64f"
-		;; Use special dev key instead of production
-		(local-file "../../ecdsap256-dev.pem")
-		#:extra-zephyr-modules (list hal-cmsis hal-nxp)
-		#:extra-configure-flags
-		'(;; k64 doesn't have fancy crypto hardware
-		  ;; so we cannot use RSA keys.
-		  "-DCONFIG_BOOT_SIGNATURE_TYPE_ECDSA_P256=y"
-		  "-DCONFIG_BOOT_SIGNATURE_TYPE_RSA=n"
-		  "-DCONFIG_BOOT_ECDSA_TINYCRYPT=y")))
-
 (define-public zephyr-canopennode
-  (package
-    (name "zephyr-canopennode")
-    (version "0.0-0.53d3415")
-    (home-page "")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-	     (url "https://github.com/zephyrproject-rtos/canopennode")
-	     (commit
-	      "53d3415c14d60f8f4bfca54bfbc5d5a667d7e724")))
-       (file-name "zephyr-canopennode-53d3415c14-checkout")
-       (sha256
-	(base32
-	 "1vqrx1zi2wbvnwza4z39nrd33j9dxpp9j9rnn12r1gdwxfjazbw0"))))
-    (build-system zephyr-module-build-system)
-    (arguments
-     '(#:workspace-path "modules/lib/canopennode"))
-    (synopsis "CANopenNode is free and open source CANopen protocol stack.")
-    (description "CANopen is the internationally standardized (EN
+  (let ((commit "53d3415c14d60f8f4bfca54bfbc5d5a667d7e724"))
+    (package
+      (name "zephyr-canopennode")
+      (version (git-version "0.0" "3.1" commit))
+      (home-page "http://www.can-cia.org")
+      (source
+       (origin
+	 (method git-fetch)
+	 (uri (git-reference
+	       (url "https://github.com/zephyrproject-rtos/canopennode")
+	       (commit commit)))
+	 (file-name (git-file-name name version))
+	 (sha256
+	  (base32
+	   "1vqrx1zi2wbvnwza4z39nrd33j9dxpp9j9rnn12r1gdwxfjazbw0"))))
+      (build-system zephyr-module-build-system)
+      (arguments
+       '(#:workspace-path "/modules/lib/canopennode"))
+      (synopsis "CANopenNode is free and open source CANopen protocol stack.")
+      (description "CANopen is the internationally standardized (EN
 50325-4) (CiA301) higher-layer protocol for embedded control system
-built on top of CAN. For more information on CANopen see
-http://www.can-cia.org/")
-    (license license:apsl2)))
+built on top of CAN.")
+      (license license:apsl2))))
 
 (define-public zephyr-chre
-  (package
-    (name "zephyr-chre")
-    (version "0.0-0.ef76d34")
-    (home-page "")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference
-	     (url "https://github.com/zephyrproject-rtos/chre")
-	     (commit
-	      "ef76d3456db07e4959df555047d6962279528c8d")))
-       (file-name "zephyr-chre-ef76d3456d-checkout")
-       (sha256
-	(base32
-	 "00jnv58slzgp4srmsamd7x34yf0hj1c6agmws4csv7w28013bwfm"))))
-    (build-system zephyr-module-build-system)
-    (arguments
-     '(#:workspace-path "modules/lib/chre"))
-    (synopsis "AOSP reference implementation of the Context Hub Runtime Environment ")
-    (description "This project contains the AOSP reference
+  (let ((commit "ef76d3456db07e4959df555047d6962279528c8d"))
+    (package
+      (name "zephyr-chre")
+      (version (git-version "0.0" "3.1" commit))
+      (home-page "")
+      (source
+       (origin
+	 (method git-fetch)
+	 (uri (git-reference
+	       (url "https://github.com/zephyrproject-rtos/chre")
+	       (commit commit)))
+	 (file-name (git-file-name name version))
+	 (sha256
+	  (base32
+	   "00jnv58slzgp4srmsamd7x34yf0hj1c6agmws4csv7w28013bwfm"))))
+      (build-system zephyr-module-build-system)
+      (arguments
+       '(#:workspace-path "/modules/lib/chre"))
+      (synopsis "AOSP reference implementation of the Context Hub Runtime Environment ")
+      (description "This project contains the AOSP reference
 implementation of the Context Hub Runtime Environment (CHRE), which is
 Android’s platform for developing always-on applications, called
 nanoapps. CHRE runs in a vendor-specific processor that is independent
