@@ -44,10 +44,14 @@
     (invoke "rm" "-rf" dir)
     hash))
 
-(define* (canonicalize-projects manifest #:optional check-hashes)
+
+(define* (canonicalize-projects manifest zephyr-version #:optional check-hashes)
   "Return a list of packages for each project in manifest.
 When check-hashes is #t, download and calculate source hash.
-This can take a while."
+This can take a while.
+
+Unfortunately the west.yml does not include descriptions or license information
+so you will have to fill this in manually."
 
   (define defaults (west-manifest-defaults manifest))
 
@@ -56,6 +60,10 @@ This can take a while."
 	   (cons (assoc-ref x "name")
 		 (assoc-ref x "url-base")))
 	 (west-manifest-remotes manifest)))
+
+  (define (canonicalize-name name)
+    (string-append "zephyr-"
+		   (string-join (string-split name #\_) "-")))
 
   (define (make-package proj)
     (let* ((name (assoc-ref proj "name"))
@@ -67,30 +75,31 @@ This can take a while."
 					(assoc-ref remotes remote))
 				   (error (format #f "No url/remote for ~a found" name)))
 			       "/" name)))
-      `(define-public ,(string->symbol (string-append "zephyr-" name))
-	 (package
-	   (name ,name)
-	   (version ,(git-version "0.0" "0" commit))
-	   (home-page "")
-	   (source
-	    (origin (method git-fetch)
-		    (uri (git-reference
-			  (url ,url)
-			  (commit ,commit)))
-		    (file-name ,(git-file-name name (substring commit 0 10)))
-		    (sha256
-		     (base32 ,(if check-hashes
-				  (download/hash url commit)
-				  "missinghashmissinghashmissinghashmissinghashmissingh")))))
-	   (build-system zephyr-build-system)
-	   (arguments '(#:workspace-path ,(assoc-ref proj "path")))
-	   (synopsis "")
-	   (description "")
-	   (license #f)))))
+      `(define-public ,(string->symbol (canonicalize-name name))
+	 (let ((commit ,commit))
+	   (package
+	    (name ,(canonicalize-name name))
+	    (version (git-version "0.0" ,zephyr-version commit))
+	    (home-page ,url)
+	    (source
+	     (origin (method git-fetch)
+		     (uri (git-reference
+			   (url ,url)
+			   (commit commit)))
+		     (file-name (git-file-name name (substring commit 0 10)))
+		     (sha256
+		      (base32 ,(if check-hashes
+				   (download/hash url commit)
+				   "missinghashmissinghashmissinghashmissinghashmissingh")))))
+	    (build-system zephyr-build-system)
+	    (arguments '(#:workspace-path ,(assoc-ref proj "path")))
+	    (synopsis "")
+	    (description "")
+	    (license #f))))))
 
   (map make-package (west-manifest-projects manifest)))
 
-(define* (guix-import-west path #:optional check-hashes)
+(define* (guix-import-west path zephyr-version #:optional check-hashes)
   "Return a list of guix packages imported from a west.yml manifest.
 If check-hashes is true, the sources will be downloaded and hashes calculated."
-  (canonicalize-projects (read-west.yml path) check-hashes))
+  (canonicalize-projects (read-west.yml path) zephyr-version check-hashes))
