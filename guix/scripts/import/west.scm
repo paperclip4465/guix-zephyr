@@ -10,10 +10,6 @@
   #:use-module (yaml)
   #:export (guix-import-west))
 
-(module-define! (resolve-module '(guix scripts import)) 'importers
-		(cons* "west"
-		       (@@ (guix scripts import) importers)))
-
 (define-record-type* <west-manifest>
   west-manifest make-west-manifest
   west-manifest?
