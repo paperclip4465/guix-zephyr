@@ -92,7 +92,7 @@ so you will have to fill this in manually."
 				   (download/hash url commit)
 				   "missinghashmissinghashmissinghashmissinghashmissingh")))))
 	    (build-system zephyr-build-system)
-	    (arguments '(#:workspace-path ,(assoc-ref proj "path")))
+	    (arguments '(#:workspace-path ,(string-append "/" (assoc-ref proj "path"))))
 	    (synopsis "")
 	    (description "")
 	    (license #f))))))
