@@ -1,3 +1,4 @@
 (channel
  (version 0)
+ (directory "zephyr")
  (url "https://github.com/paperclip4465/guix-zephyr"))
