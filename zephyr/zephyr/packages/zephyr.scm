@@ -421,9 +421,7 @@ language is C.")
     (propagated-inputs
      (list
       arm-zephyr-eabi-nano-toolchain-12
-      gdb-arm-zephyr-eabi
-      dtc
-      qemu))
+      dtc))
     (native-search-paths
      (list (search-path-specification
 	    (variable "ZEPHYR_SDK_INSTALL_DIR")
