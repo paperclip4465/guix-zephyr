@@ -49,7 +49,10 @@
        (substitute-keyword-arguments (package-arguments xbinutils)
 	 ((#:tests? tests '()) #f)
 	 ((#:configure-flags flags)
-	  #~(cons "--program-prefix=arm-zephyr-eabi-" #$flags))))
+	  #~(cons* "--enable-multilib"
+		   "--disable-gdb"
+		   "--disable-sim"
+		   #$flags))))
       (native-inputs
        (append
 	(list texinfo
