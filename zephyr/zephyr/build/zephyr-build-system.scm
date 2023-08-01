@@ -6,7 +6,9 @@
   #:use-module (ice-9 format)
   #:use-module (ice-9 ftw)
   #:export (%standard-phases
-	    zephyr-build))
+	    find-zephyr-modules
+	    zephyr-build
+	    zephyr-modules-cmake-argument))
 
 ;; Commentary:
 ;;
