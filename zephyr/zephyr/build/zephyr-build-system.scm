@@ -40,7 +40,8 @@ not accessible."
 
   (define (find-modules directory)
     (file-system-fold enter? leaf down up skip error
-		      '() (canonicalize-path directory)))
+		      '() (canonicalize-path directory)
+		      stat))
 
   (append-map find-modules directories))
 
