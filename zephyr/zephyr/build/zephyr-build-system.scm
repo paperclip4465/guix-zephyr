@@ -47,14 +47,13 @@ not accessible."
 (define (zephyr-modules-cmake-argument modules)
   (format #f "-DZEPHYR_MODULES='~{~a~^;~}'" modules))
 
-(define* (configure #:key outputs (configure-flags '())
+(define* (configure #:key (configure-flags '())
 		    board
 		    inputs (out-of-source? #t)
 		    build-type
 		    #:allow-other-keys)
   "Configure the given package."
-  (let* ((out        (assoc-ref outputs "out"))
-	 (abs-srcdir (getcwd))
+  (let* ((abs-srcdir (getcwd))
 	 (srcdir     (if out-of-source?
 			 (string-append "../" (basename abs-srcdir))
 			 ".")))
