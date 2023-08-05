@@ -31,11 +31,11 @@
     ,@%cmake-build-system-modules))
 
 (define default-zephyr-base
-  (module-ref (resolve-interface '(zephyr packages zephyr))
+  (module-ref (resolve-interface '(gnu packages zephyr))
 	      'zephyr-3.1))
 
 (define default-zephyr-sdk
-  (module-ref (resolve-interface '(zephyr packages zephyr))
+  (module-ref (resolve-interface '(gnu packages zephyr))
 	      'arm-zephyr-eabi-sdk))
 
 (define default-ninja

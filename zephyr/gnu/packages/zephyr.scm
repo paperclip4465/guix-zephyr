@@ -1,4 +1,5 @@
 (define-module (zephyr packages zephyr)
+  #:use-module (srfi srfi-26)
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix build utils)
@@ -130,13 +131,11 @@
 			  "--with-multilib-list=rmprofile"
 			  "--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
 			  "--enable-plugins"
-			  "--disable-decimal-float"
-			  "--disable-libffi"
+			  "--disable-libatomic"
 			  "--disable-libgomp"
 			  "--disable-libmudflap"
 			  "--disable-libquadmath"
 			  "--disable-libssp"
-			  "--disable-libstdcxx-pch"
 			  "--disable-nls"
 			  "--disable-shared"
 			  "--disable-threads"
@@ -144,7 +143,10 @@
 			  "--with-gnu-ld"
 			  "--with-gnu-as"
 			  "--enable-initfini-array")
-		    (delete "--disable-multilib" #$flags)))))
+		    (delete "--disable-multilib" #$flags)))
+	 ((#:make-flags flags)
+	  #~(append '("CFLAGS_FOR_TARGET=-g -O2")
+		    #$flags))))
       (native-search-paths
        (list (search-path-specification
 	      (variable "CROSS_C_INCLUDE_PATH")
@@ -284,16 +286,20 @@ usable on embedded products.")
       (arguments
        (substitute-keyword-arguments (package-arguments libstdc++)
 	 ((#:configure-flags flags)
-	  `(append '("--target=arm-zephyr-eabi"
-		     "--host=arm-zephyr-eabi"
-		     "--disable-libstdcxx-pch"
-		     "--enable-multilib"
-		     "--with-multilib-list=armv7-m,armv7e-m"
-		     "--disable-shared"
-		     "--disable-tls"
-		     "--disable-plugin"
-		     "--with-newlib")
-		   ,flags))))
+	  #~(append `("--host=arm-none-eabi"
+		      "--target=arm-zephyr-eabi"
+		      "--disable-libstdcxx-pch"
+		      "--enable-multilib"
+		      "--with-multilib-list=rmprofile"
+		      "--disable-shared"
+		      "--disable-tls"
+		      "--disable-plugin"
+		      "--with-newlib"
+		      "--with-gnu-ld"
+		      "--with-gnu-as"
+		      ,(string-append "--with-gxx-include-dir="
+				      #$output
+				      "/arm-zephyr-eabi/include/c++"))))))
       (native-inputs
        `(("newlib" ,newlib)
 	 ("xgcc" ,xgcc)
@@ -332,12 +338,8 @@ library variant NEWLIB."
 		#t))))))
       (propagated-inputs
        `(("binutils" ,arm-zephyr-eabi-binutils)
-	 ;; XXX: The zephyr toolchain also includes libc++ but I
-	 ;; cannot get it to build. The arm-none-eabi-toolchain also includes
-	 ;; libc++ but copy and pasting that code has failed  us this time :(.
-	 ;; No C++ is "okay" for now but we need it to run tensor flow.
-	 ;; ("libstdc++" ,(make-libstdc++-arm-zephyr-eabi xgcc newlib-with-xgcc))
 	 ("gcc" ,xgcc)
+	 ("libstdc++" ,(make-libstdc++-arm-zephyr-eabi xgcc newlib-with-xgcc))
 	 ("newlib" ,newlib-with-xgcc)))
       (synopsis "Complete GCC tool chain for ARM zephyrRTOS development")
       (description "This package provides a complete GCC tool chain for ARM
