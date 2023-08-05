@@ -50,19 +50,18 @@ not accessible."
 
 (define* (configure #:key (configure-flags '())
 		    board
-		    inputs (out-of-source? #t)
+		    (build-location "../build")
 		    build-type
+		    inputs (out-of-source? #t)
 		    #:allow-other-keys)
   "Configure the given package."
   (let* ((abs-srcdir (getcwd))
-	 (srcdir     (if out-of-source?
-			 (string-append "../" (basename abs-srcdir))
-			 ".")))
+	 (srcdir     abs-srcdir))
     (format #t "source directory: ~s (relative from build: ~s)~%"
 	    abs-srcdir srcdir)
     (when out-of-source?
-      (mkdir "../build")
-      (chdir "../build"))
+      (mkdir build-location)
+      (chdir build-location))
     (format #t "build directory: ~s~%" (getcwd))
     (setenv "XDG_CACHE_HOME" (getcwd))
 
