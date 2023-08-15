@@ -6,7 +6,7 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system copy)
   #:use-module (gnu packages)
-  #:use-module (gnu packages zephyr)
+  #:use-module (zephyr packages zephyr)
   #:use-module (ice-9 format)
   #:use-module (zephyr build-system zephyr)
   #:use-module (zephyr build-system zephyr-module)
