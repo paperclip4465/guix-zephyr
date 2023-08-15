@@ -1337,35 +1337,6 @@ This version of zscilib has been developed and tested against Zephyr
 2.7.0.")
       (license license:apsl2))))
 
-
-(define-public hal-cmsis-3.2.0-rc3
-  (let ((commit "093de61c2a7d12dc9253daf8692f61f793a9254a"))
-    (package (inherit zephyr-cmsis)
-      (version (git-version "5.8.0" "3.2.0-rc3" commit))
-      (source (origin
-		(method git-fetch)
-		(uri (git-reference
-		      (url "https://github.com/zephyrproject-rtos/cmsis")
-		      (commit commit)))
-		(file-name (git-file-name "hal-cmsis" version))
-		(sha256
-		 (base32 "0354fz5lb2vg3zj0ciwjmz4slh3s5rnvkmixikn36m51wk8vcq1j")))))))
-
-
-(define-public zcbor-0.5.1
-  (let ((commit "a0d6981f14d4001d6f0d608d1a427f9bc6bb6d02"))
-    (package
-      (inherit zcbor)
-      (version (git-version "0.5.1" "3.2.0-rc3" commit))
-      (source (origin
-		(method git-fetch)
-		(uri (git-reference
-		      (url "https://github.com/zephyrproject-rtos/zcbor")
-		      (commit commit)))
-		(file-name (git-file-name "zcbor" version))
-		(sha256
-		 (base32 "03xz79pi210kny55ks9cyr8i9m68f7kla3nv5zk2afg59ms0nwdc")))))))
-
 (define* (make-mcuboot board key #:key
 		       (mcuboot zephyr-mcuboot)
 		       (zephyr-base zephyr-3.1)
@@ -1402,48 +1373,3 @@ binaries. EXTRA-CONFIGURE-FLAGS can be given as a string or a list of strings."
 			       extra-configure-flags))))))
     (description (format #f "~a~&This bootloader has been configured for ~a."
 			 (package-description mcuboot) board))))
-
-
-(define-public zephyr-hello-world-frdm-k64f
-  (package
-    (name "zephyr-hello-world-frdm-k64f")
-    (version (package-version zephyr-3.1))
-    (home-page "https://zephyrproject.org")
-    (source (file-append (package-source zephyr-3.1)
-			 "/samples/hello_world"))
-    (build-system zephyr-build-system)
-    (arguments
-     '(#:configure-flags '("-DBOARD=frdm_k64f")))
-    (outputs '("out" "debug"))
-    (inputs
-     (list zephyr-cmsis
-	   zephyr-hal-nxp))
-    (synopsis "Hello world example from Zephyr Project")
-    (description "Sample package for zephyr project")
-    (license license:apsl2)))
-
-
-(define-public zephyr-hello-world-newlib-frdm-k64f
-  (package
-    (inherit zephyr-hello-world-frdm-k64f)
-    (name "zephyr-hello-world-newlib-frdm-k64f")
-    (arguments
-     (substitute-keyword-arguments (package-arguments zephyr-hello-world-frdm-k64f)
-       ((#:configure-flags flags)
-	`(append
-	  '("-DCONFIG_MINIMAL_LIBC=n"
-	    "-DCONFIG_NEWLIB_LIBC=y")
-	  ,flags))))))
-
-(define-public mcuboot-frdm-k64f
-  (make-mcuboot "frdm_k64f"
-		;; Use special dev key instead of production
-		(local-file "../../ecdsap256-dev.pem")
-		#:extra-zephyr-modules (list zephyr-cmsis
-					     zephyr-hal-nxp)
-		#:extra-configure-flags
-		'(;; k64 doesn't have fancy crypto hardware
-		  ;; so we cannot use RSA keys.
-		  "-DCONFIG_BOOT_SIGNATURE_TYPE_ECDSA_P256=y"
-		  "-DCONFIG_BOOT_SIGNATURE_TYPE_RSA=n"
-		  "-DCONFIG_BOOT_ECDSA_TINYCRYPT=y")))
