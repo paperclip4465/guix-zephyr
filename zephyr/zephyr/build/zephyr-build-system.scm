@@ -1,52 +1,15 @@
 (define-module (zephyr build zephyr-build-system)
   #:use-module ((guix build cmake-build-system) #:prefix cmake:)
   #:use-module (guix build utils)
-  #:use-module (srfi srfi-1)
-  #:use-module (ice-9 match)
-  #:use-module (ice-9 format)
-  #:use-module (ice-9 ftw)
+  #:use-module (zephyr build utils)
   #:export (%standard-phases
-	    find-zephyr-modules
-	    zephyr-build
-	    zephyr-modules-cmake-argument))
+	    zephyr-build))
 
 ;; Commentary:
 ;;
 ;; Builder-side code of the standard zephyr build procedure
 ;;
 ;; Code:
-
-(define* (find-zephyr-modules directories)
-  "Return the list of directories containing zephyr/module.yml found
-under DIRECTORY, recursively. Return the empty list if DIRECTORY is
-not accessible."
-  (define (module-directory file)
-    (dirname (dirname file)))
-
-  (define (enter? name stat result)
-    ;; Skip version control directories.
-    (not (member (basename name) '(".git" ".svn" "CVS"))))
-
-  (define (leaf name stat result)
-    ;; Add module root directory to results
-    (if (and (string= "module.yml" (basename name))
-	     (string= "zephyr" (basename (dirname name))))
-	(cons (module-directory name) result)
-	result))
-
-  (define (down name stat result) result)
-  (define (up name stat result) result)
-  (define (skip name stat result) result)
-
-  (define (find-modules directory)
-    (file-system-fold enter? leaf down up skip error
-		      '() (canonicalize-path directory)
-		      stat))
-
-  (append-map find-modules directories))
-
-(define (zephyr-modules-cmake-argument modules)
-  (format #f "-DZEPHYR_MODULES='~{~a~^;~}'" modules))
 
 (define* (configure #:key (configure-flags '())
 		    board
@@ -65,19 +28,12 @@ not accessible."
     (format #t "build directory: ~s~%" (getcwd))
     (setenv "XDG_CACHE_HOME" (getcwd))
 
-    (let ((args `(,srcdir
-		  ,@(if build-type
-			(list (string-append "-DCMAKE_BUILD_TYPE="
-					     build-type))
-			'())
-		  ;; enable verbose output from builds
-		  "-DCMAKE_VERBOSE_MAKEFILE=ON"
-		  ,@(if board
-			(list (string-append "-DBOARD=" board))
-			'())
-		  ,(zephyr-modules-cmake-argument
-		    (find-zephyr-modules (map cdr inputs)))
-		  ,@configure-flags)))
+    (let ((args (configure-args #:configure-flags configure-flags
+				#:board board
+				#:build-location build-location
+				#:source-location srcdir
+				#:build-type build-type
+				#:inputs inputs)))
       (format #t "running 'cmake' with arguments ~s~%" args)
       (apply invoke "cmake" args))))
 
