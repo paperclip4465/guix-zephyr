@@ -55,22 +55,16 @@ not accessible."
 			 build-type
 			 inputs (out-of-source? #t))
   "Configure the given package."
-  (let* ((srcdir (canonicalize-path source-location)))
-    (when out-of-source?
-      (chdir build-location))
-    (format #t "build directory: ~s~%" (getcwd))
-    (setenv "XDG_CACHE_HOME" (getcwd))
-
-    `(,srcdir
-      ,@(if build-type
-	    (list (string-append "-DCMAKE_BUILD_TYPE="
-				 build-type))
-	    '())
-      ;; enable verbose output from builds
-      "-DCMAKE_VERBOSE_MAKEFILE=ON"
-      ,@(if board
-	    (list (string-append "-DBOARD=" board))
-	    '())
-      ,(zephyr-modules-cmake-argument
-	(find-zephyr-modules (map cdr inputs)))
-      ,@configure-flags)))
+  `(,(canonicalize-path source-location)
+    ,@(if build-type
+	  (list (string-append "-DCMAKE_BUILD_TYPE="
+			       build-type))
+	  '())
+    ;; enable verbose output from builds
+    "-DCMAKE_VERBOSE_MAKEFILE=ON"
+    ,@(if board
+	  (list (string-append "-DBOARD=" board))
+	  '())
+    ,(zephyr-modules-cmake-argument
+      (find-zephyr-modules (map cdr inputs)))
+    ,@configure-flags))
