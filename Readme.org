@@ -104,18 +104,6 @@ does not provide ~main~ is likely a module.
 		   (base32 "1c0i26bpk6cyhr1q4af183jclfmxshv4d15i7k3cz7brzb12m8q1"))))
 	(build-system zephyr-module-build-system)
 	(arguments `(#:workspace-path ,module-path))
-
-	;; XXX: This is a hack for userspace usability.
-	;; On the build side we can walk the inputs and discover which ones are
-	;; zephyr modules. In the userspace you need pass ZEPHYR_MODULES=$ZEPHYR_MODULES
-	;; this is annoying but the build system does not respect the
-	;; environment variable.  If someone knows how to fix this that
-	;; would be helpful! Until then just put it in the makefile.
-	(native-search-paths
-	 (list (search-path-specification
-		(variable "ZEPHYR_MODULES")
-		(files `(,(string-append %zephyr-workspace-name module-path)))
-		(separator ";"))))
 	(synopsis "Zephyr module for NXP Hardware Abstraction Layer")
 	(description "Provides sources for NXP HAL zephyr module")
 	(license license:bsd-3))))
@@ -168,3 +156,33 @@ Below is an example bootloader which targets the =frdm_k64f=.
 		  "-DCONFIG_BOOT_SIGNATURE_TYPE_RSA=n"
 		  "-DCONFIG_BOOT_ECDSA_TINYCRYPT=y"))
 #+END_SRC
+
+* Guest (Guile + West) v0.0.1
+
+Guest is a command line utility for working with Guix based Zephyr
+projects.  Using ~guix build~ in the CI is all well in good but during
+development spawning an isolated environment is a bit
+cumbersome. Speaking of cumbersome...
+
+Passing ~$ZEPHYR_MODULES~ to CMake when said modules are located in
+the store is almost impossible.  Zephyr's CMake scripts call out to
+West, when available, to provide the list of locations to include and
+that is all Guest does at the moment.
+
+#+BEGIN_SRC sh
+guest list $GUIX_ENVIRONMENT/zephyr-workspace/modules
+#+END_SRC
+
+** Building
+
+Guest is built using the GNU build system.
+
+#+BEGIN_SRC sh
+  guix shell -D -f guix.scm
+  ./configure && make && make install
+#+END_SRC
+
+** Extensions
+
+Guest is extended in the same way Guix is extended, with scripts
+located in =guest/scripts=.
