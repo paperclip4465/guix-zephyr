@@ -127,7 +127,7 @@ am__uninstall_files_from_dir = { \
          $(am__cd) "$$dir" && rm -f $$files; }; \
   }
 am__installdirs = "$(DESTDIR)$(bindir)" "$(DESTDIR)$(godir)" \
-	"$(DESTDIR)$(moddir)"
+	"$(DESTDIR)$(moddir)" "$(DESTDIR)$(guilemoduledir)"
 SCRIPTS = $(bin_SCRIPTS) $(nodist_noinst_SCRIPTS)
 AM_V_P = $(am__v_P_@AM_V@)
 am__v_P_ = $(am__v_P_@AM_DEFAULT_V@)
@@ -147,7 +147,8 @@ am__can_run_installinfo = \
     n|no|NO) false;; \
     *) (install-info --version) >/dev/null 2>&1;; \
   esac
-DATA = $(nobase_go_DATA) $(nobase_mod_DATA)
+DATA = $(nobase_go_DATA) $(nobase_mod_DATA) \
+	$(nobase_nodist_guilemodule_DATA)
 am__tagged_files = $(HEADERS) $(SOURCES) $(TAGS_FILES) $(LISP)
 # Read a list of newline-separated strings from the standard input,
 # and print each of them once, without duplicates.  Input order is
@@ -295,23 +296,22 @@ do_subst = $(SED)					\
   -e 's,[@]localedir[@],$(localedir),g'
 
 nodist_noinst_SCRIPTS = pre-inst-env
-GOBJECTS = $(SOURCES:%.scm=%.go)
 moddir = $(prefix)/share/guile/site/$(GUILE_EFFECTIVE_VERSION)
 godir = $(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache
 ccachedir = $(libdir)/guile/$(GUILE_EFFECTIVE_VERSION)/site-ccache
 nobase_mod_DATA = $(SOURCES) $(NOCOMP_SOURCES)
 nobase_go_DATA = $(GOBJECTS)
+nobase_nodist_guilemodule_DATA = guest/config.scm
 
 # Make sure source files are installed first, so that the mtime of
 # installed compiled files is greater than that of installed source
 # files.  See
 # <http://lists.gnu.org/archive/html/guile-devel/2010-07/msg00125.html>
 # for details.
-guile_install_go_files = install-nobase_goDATA
+guile_install_go_files = install-nobase_go_DATA
 EXTRA_DIST = $(SOURCES) $(NOCOMP_SOURCES) COPYING HACKING README \
 	Readme.org .gitignore
 GUILE_WARNINGS = -Wunbound-variable -Warity-mismatch -Wformat
-SUFFIXES = .scm .go
 SOURCES = \
 	guest/config.scm \
 	guest/i18n.scm \
@@ -321,6 +321,7 @@ SOURCES = \
 	guest/scripts/list.scm \
 	zephyr/zephyr/build/utils.scm
 
+GOBJECTS = $(SOURCES:%.scm=%.go)
 AM_TESTS_ENVIRONMENT = abs_top_srcdir="$(abs_top_srcdir)"
 ACLOCAL_AMFLAGS = -I m4
 CLEANFILES = \
@@ -330,7 +331,7 @@ CLEANFILES = \
 all: all-am
 
 .SUFFIXES:
-.SUFFIXES: .scm .go
+.SUFFIXES: .go .scm
 am--refresh: Makefile
 	@:
 $(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
@@ -453,6 +454,30 @@ uninstall-nobase_modDATA:
 	@list='$(nobase_mod_DATA)'; test -n "$(moddir)" || list=; \
 	$(am__nobase_strip_setup); files=`$(am__nobase_strip)`; \
 	dir='$(DESTDIR)$(moddir)'; $(am__uninstall_files_from_dir)
+install-nobase_nodist_guilemoduleDATA: $(nobase_nodist_guilemodule_DATA)
+	@$(NORMAL_INSTALL)
+	@list='$(nobase_nodist_guilemodule_DATA)'; test -n "$(guilemoduledir)" || list=; \
+	if test -n "$$list"; then \
+	  echo " $(MKDIR_P) '$(DESTDIR)$(guilemoduledir)'"; \
+	  $(MKDIR_P) "$(DESTDIR)$(guilemoduledir)" || exit 1; \
+	fi; \
+	$(am__nobase_list) | while read dir files; do \
+	  xfiles=; for file in $$files; do \
+	    if test -f "$$file"; then xfiles="$$xfiles $$file"; \
+	    else xfiles="$$xfiles $(srcdir)/$$file"; fi; done; \
+	  test -z "$$xfiles" || { \
+	    test "x$$dir" = x. || { \
+	      echo " $(MKDIR_P) '$(DESTDIR)$(guilemoduledir)/$$dir'"; \
+	      $(MKDIR_P) "$(DESTDIR)$(guilemoduledir)/$$dir"; }; \
+	    echo " $(INSTALL_DATA) $$xfiles '$(DESTDIR)$(guilemoduledir)/$$dir'"; \
+	    $(INSTALL_DATA) $$xfiles "$(DESTDIR)$(guilemoduledir)/$$dir" || exit $$?; }; \
+	done
+
+uninstall-nobase_nodist_guilemoduleDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nobase_nodist_guilemodule_DATA)'; test -n "$(guilemoduledir)" || list=; \
+	$(am__nobase_strip_setup); files=`$(am__nobase_strip)`; \
+	dir='$(DESTDIR)$(guilemoduledir)'; $(am__uninstall_files_from_dir)
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -688,7 +713,7 @@ check-am: all-am
 check: check-am
 all-am: Makefile $(SCRIPTS) $(DATA)
 installdirs:
-	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(godir)" "$(DESTDIR)$(moddir)"; do \
+	for dir in "$(DESTDIR)$(bindir)" "$(DESTDIR)$(godir)" "$(DESTDIR)$(moddir)" "$(DESTDIR)$(guilemoduledir)"; do \
 	  test -z "$$dir" || $(MKDIR_P) "$$dir"; \
 	done
 install: install-am
@@ -743,7 +768,8 @@ info: info-am
 
 info-am:
 
-install-data-am: install-nobase_goDATA install-nobase_modDATA
+install-data-am: install-nobase_goDATA install-nobase_modDATA \
+	install-nobase_nodist_guilemoduleDATA
 
 install-dvi: install-dvi-am
 
@@ -790,7 +816,8 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-binSCRIPTS uninstall-nobase_goDATA \
-	uninstall-nobase_modDATA
+	uninstall-nobase_modDATA \
+	uninstall-nobase_nodist_guilemoduleDATA
 
 .MAKE: install-am install-strip
 
@@ -804,16 +831,34 @@ uninstall-am: uninstall-binSCRIPTS uninstall-nobase_goDATA \
 	install-data-am install-dvi install-dvi-am install-exec \
 	install-exec-am install-html install-html-am install-info \
 	install-info-am install-man install-nobase_goDATA \
-	install-nobase_modDATA install-pdf install-pdf-am install-ps \
-	install-ps-am install-strip installcheck installcheck-am \
-	installdirs maintainer-clean maintainer-clean-generic \
-	mostlyclean mostlyclean-generic pdf pdf-am ps ps-am tags \
-	tags-am uninstall uninstall-am uninstall-binSCRIPTS \
-	uninstall-nobase_goDATA uninstall-nobase_modDATA
+	install-nobase_modDATA install-nobase_nodist_guilemoduleDATA \
+	install-pdf install-pdf-am install-ps install-ps-am \
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-generic pdf pdf-am ps ps-am tags tags-am uninstall \
+	uninstall-am uninstall-binSCRIPTS uninstall-nobase_goDATA \
+	uninstall-nobase_modDATA \
+	uninstall-nobase_nodist_guilemoduleDATA
 
 .PRECIOUS: Makefile
 
-$(guile_install_go_files): install-nobase_modDATA
+
+scripts/guest: scripts/guest.in Makefile
+	$(AM_V_at)rm -f $@ $@-t
+	$(AM_V_at)$(MKDIR_P) "$(@D)"
+	$(AM_V_GEN)$(do_subst) < "$(srcdir)/$@.in" > "$@-t"
+	$(AM_V_at)chmod a+x,a-w "$@-t" && mv -f "$@-t" "$@"
+
+# Handy way to remove the .go files without removing all the rest.
+clean-go:
+	-$(RM) -f $(GOBJECTS)
+	@find . -path ./test-tmp -prune -o -name '*.go' -print | \
+	  if test -t 1; then \
+	    xargs -r echo -e "\033[31mwarning:\033[0m stray .go files:"; \
+	  else \
+	    xargs -r echo "warning: stray .go files:"; \
+	  fi
+$(guile_install_go_files): install-nobase_mod_DATA
 .scm.go:
 	$(AM_V_GEN)$(top_builddir)/pre-inst-env $(GUILE_TOOLS) compile $(GUILE_WARNINGS) -o "$@" "$<"
 
