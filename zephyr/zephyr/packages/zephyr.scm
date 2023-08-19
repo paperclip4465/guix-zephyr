@@ -339,7 +339,6 @@ library variant NEWLIB."
       (propagated-inputs
        `(("binutils" ,arm-zephyr-eabi-binutils)
 	 ("gcc" ,xgcc)
-	 ("libstdc++" ,(make-libstdc++-arm-zephyr-eabi xgcc newlib-with-xgcc))
 	 ("newlib" ,newlib-with-xgcc)))
       (synopsis "Complete GCC tool chain for ARM zephyrRTOS development")
       (description "This package provides a complete GCC tool chain for ARM
