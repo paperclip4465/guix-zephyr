@@ -70,7 +70,7 @@ different devices.")
       (license license:apsl2))))
 
 (define-public zephyr-cmsis
-  (let ((commit "0f7cipnwllna7iknsnz273jkvrly16yr6wm4y2018i6njpqh67wi"))
+  (let ((commit "5f86244bad4ad5a590e084f0e72ba7a1416c2edf"))
     (package
       (name "zephyr-cmsis")
       (version (git-version "5.8.0" "3.1" commit))
