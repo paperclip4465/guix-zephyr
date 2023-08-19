@@ -48,7 +48,11 @@ to find out the value of 'exec_prefix' at first, etc."
 normal command-line list."
 
   (unless (getenv "GUEST_UNINSTALLED")
-    (push! (config-lookup "guilemoduledir") %load-path)
-    (push! (config-lookup "guileobjectdir") %load-compiled-path))
+    (let ((mod-dir (config-lookup "guilemoduledir"))
+	  (obj-dir (config-lookup "guileobjectdir")))
+      (push! mod-dir %load-path)
+      (push! (string-append mod-dir "/zephyr") %load-path)
+      (push! obj-dir %load-compiled-path)
+      (push! (string-append obj-dir "/zephyr") %load-compiled-path)))
 
   (apply guest-main args))
