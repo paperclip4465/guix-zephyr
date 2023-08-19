@@ -39,7 +39,6 @@ SOURCES = \
 	guest/ui.scm \
 	guest/utils.scm \
 	guest/scripts/list.scm \
-	guest/scripts/build.scm \
 	zephyr/zephyr/build/utils.scm
 
 
