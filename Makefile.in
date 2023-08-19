@@ -276,6 +276,7 @@ pdfdir = @pdfdir@
 prefix = @prefix@
 program_transform_name = @program_transform_name@
 psdir = @psdir@
+runstatedir = @runstatedir@
 sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 srcdir = @srcdir@
@@ -308,7 +309,7 @@ nobase_go_DATA = $(GOBJECTS)
 # for details.
 guile_install_go_files = install-nobase_goDATA
 EXTRA_DIST = $(SOURCES) $(NOCOMP_SOURCES) COPYING HACKING README \
-	README.org .gitignore
+	Readme.org .gitignore
 GUILE_WARNINGS = -Wunbound-variable -Warity-mismatch -Wformat
 SUFFIXES = .scm .go
 SOURCES = \
@@ -318,7 +319,6 @@ SOURCES = \
 	guest/ui.scm \
 	guest/utils.scm \
 	guest/scripts/list.scm \
-	guest/scripts/build.scm \
 	zephyr/zephyr/build/utils.scm
 
 AM_TESTS_ENVIRONMENT = abs_top_srcdir="$(abs_top_srcdir)"
