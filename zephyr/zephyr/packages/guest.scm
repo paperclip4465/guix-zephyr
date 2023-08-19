@@ -11,7 +11,7 @@
   #:use-module (gnu packages texinfo))
 
 (define-public guest
-  (let ((commit "bc54d17eddf84ca993faa43fa725454e36e991d1"))
+  (let ((commit "ff1d593894b5efb63073a8b3b6ceed7bc3e8ab3d"))
     (package
       (name "guest")
       (version (git-version "0.0.1" "" commit))
@@ -22,7 +22,7 @@
 			    (commit commit)))
 		      (file-name (git-file-name name version))
 		      (sha256
-		       (base32 "1pi0y66m18nfrqzgp51m7w2gdb3znmzrkbl68ikhlqyhll17b4k5"))))
+		       (base32 "14b0vb3nlbgd4bnp0alspzp8x14ks2b5y83f0bvka20n8r90wn0g"))))
       (build-system gnu-build-system)
       (arguments
        `(#:modules
