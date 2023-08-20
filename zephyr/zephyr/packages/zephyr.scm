@@ -485,22 +485,6 @@ as host tools like dtc, openocd, and qemu.")
       (description "Zephyr rtos source code.")
       (license license:apsl2))))
 
-
-(define-public zephyr-3.2.0-rc3
-  (package (inherit zephyr-3.1)
-    (version "3.2.0-rc3")
-    (source (origin (method git-fetch)
-		    (uri (git-reference
-			  (url "https://github.com/zephyrproject-rtos/zephyr")
-			  (commit "v3.2.0-rc3")))
-		    (file-name (git-file-name "zephyr" version))
-		    (sha256
-		     (base32 "06ksd9zj4j19jq0zg3lms13jx0gxzjc41433zgb91cnd2cqmn5cb"))
-		    (patches
-		     (search-patches "zephyr-3.1-linker-gen-abs-path.patch"))))))
-
-(define-public zephyr zephyr-3.1)
-
 (define-public imgtool
   (package
     (name "imgtool")
