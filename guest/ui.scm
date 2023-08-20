@@ -285,3 +285,9 @@ and signal handling have already been set up."
 (define (guest-main arg0 . args)
   (initialize-guest)
   (apply run-guest args))
+
+;;; Local Variables:
+;;; eval: (put 'guard* 'scheme-indent-function 2)
+;;; End:
+
+;;; ui.scm ends here
