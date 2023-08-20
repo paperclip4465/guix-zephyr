@@ -1,1 +1,1 @@
-/home/mitchell/guix-zephyr/zephyr/zephyr/packages/guest.scm
+zephyr/zephyr/packages/guest.scm
