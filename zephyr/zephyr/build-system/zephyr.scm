@@ -75,9 +75,7 @@
     ;; Inputs need to be available at build time
     ;; since everything is statically linked.
     (host-inputs inputs)
-    (outputs (if (member "debug" outputs)
-		 outputs
-		 (cons* "debug" outputs)))
+    (outputs outputs)
     (build zephyr-build)
     (arguments (strip-keyword-arguments private-keywords arguments))))
 
@@ -99,40 +97,42 @@
 		       (substitutable? #t)
 		       (imported-modules %zephyr-build-system-modules)
 		       (modules '((zephyr build zephyr-build-system)
-				  (zephyr build utils)
 				  (guix build utils))))
   "Build SOURCE using CMAKE, and with INPUTS. This assumes that SOURCE
 provides a 'CMakeLists.txt' file as its build system."
   (define build
-    (with-imported-modules imported-modules
-      #~(begin
-	  (use-modules #$@(sexp->gexp modules))
-	  #$(with-build-variables inputs outputs
-	      #~(zephyr-build #:source #+source
-			      #:name #$name
-			      #:system #$system
-			      #:outputs %outputs
-			      #:inputs %build-inputs
-			      #:board #$board
-			      #:bin-name #$bin-name
-			      #:search-paths '#$(sexp->gexp
-						 (map search-path-specification->sexp
-						      search-paths))
-			      #:phases #$(if (pair? phases)
-					     (sexp->gexp phases)
-					     phases)
-			      #:configure-flags #$(if (pair? configure-flags)
-						      (sexp->gexp configure-flags)
-						      configure-flags)
-			      #:make-flags #$make-flags
-			      #:out-of-source? #$out-of-source?
-			      #:tests? #$tests?
-			      #:test-target #$test-target
-			      #:parallel-build? #$parallel-build?
-			      #:parallel-tests? #$parallel-tests?
-			      #:validate-runpath? #$validate-runpath?
-			      #:patch-shebangs? #$patch-shebangs?
-			      #:strip-binaries? #f)))))
+    (let ((outputs (if (member "debug" outputs)
+		       outputs
+		       (cons* "debug" outputs))))
+      (with-imported-modules imported-modules
+	#~(begin
+	    (use-modules #$@(sexp->gexp modules))
+	    #$(with-build-variables inputs outputs
+		#~(zephyr-build #:source #+source
+				#:name #$name
+				#:system #$system
+				#:outputs %outputs
+				#:inputs %build-inputs
+				#:board #$board
+				#:bin-name #$bin-name
+				#:search-paths '#$(sexp->gexp
+						   (map search-path-specification->sexp
+							search-paths))
+				#:phases #$(if (pair? phases)
+					       (sexp->gexp phases)
+					       phases)
+				#:configure-flags #$(if (pair? configure-flags)
+							(sexp->gexp configure-flags)
+							configure-flags)
+				#:make-flags #$make-flags
+				#:out-of-source? #$out-of-source?
+				#:tests? #$tests?
+				#:test-target #$test-target
+				#:parallel-build? #$parallel-build?
+				#:parallel-tests? #$parallel-tests?
+				#:validate-runpath? #$validate-runpath?
+				#:patch-shebangs? #$patch-shebangs?
+				#:strip-binaries? #f))))))
 
   (mlet %store-monad ((guile (package->derivation (or guile (default-guile))
 						  system #:graft? #f)))
