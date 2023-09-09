@@ -75,7 +75,9 @@
     ;; Inputs need to be available at build time
     ;; since everything is statically linked.
     (host-inputs inputs)
-    (outputs outputs)
+    (outputs (if (member "debug" outputs)
+		 outputs
+		 (cons* "debug" outputs)))
     (build zephyr-build)
     (arguments (strip-keyword-arguments private-keywords arguments))))
 
