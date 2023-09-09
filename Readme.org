@@ -5,21 +5,15 @@ for managing ZephyrRTOS based projects.
 
 * Why?
 
-Guix provides a complete model of the system and solves some of the problems
-the Zephyr Project is suffering from:
+Guix provides a complete model of the system and provides an
+alternative dependency model to the [[https://docs.zephyrproject.org/latest/develop/west/manifest.html#id11][one used by West]].
 
-1. *A fully (unprivilaged) bootstrapped build environment*, including
-   python modules, which results in 100% reproducible builds. The
-   project itself takes a lot of care to ensure reproducibility but
-   because they cannot control the universe there are limits to what
-   they can guarentee. Guix /can/ control the universe and is way more
-   extensible than West.
-
-2. *Smaller Development Environments*, when West manages a Zephyr
-   workspace it pulls down over 3GB of modules, most of which are not
-   required for your project. Guix knows exactly what is required and
-   will include only what is required into the environment.
-
+Guix also provides *A fully (unprivileged) bootstrapped build
+environment*, including python modules, which results in 100%
+reproducible builds. The Zephyr project itself takes a lot of care to ensure
+reproducibility but because they cannot control the universe there are
+limits to what they can guarantee. Guix /can/ control the universe and
+so can guarentee reproducibility.
 
 * Installation
 
@@ -64,22 +58,24 @@ Firmware can be defined like so.
       (name "zephyr-hello-world-frdm-k64f")
       (version (package-version zephyr))
       (home-page "https://zephyrproject.org")
-      (source (file-append (package-source zephyr)
+      (source (file-append (package-source zephyr-3.1)
 			   "/samples/hello_world"))
       (build-system zephyr-build-system)
       (arguments
-       '(#:configure-flags '("-DBOARD=frdm_k64f")))
-      (outputs '("out" "debug"))
+       `(#:configure-flags '("-DBOARD=frdm_k64f")
+	 ;; The zephyr-build-system accepts additional arguments
+	 ;; such as bin-name and zephyr
+	 ;; XXX: bin-name and zephyr should be optional but currently
+	 ;; bin-name is required
+	 #:bin-name "hello-world"
+	 #:zephyr ,zephyr-3.1))
       (inputs
-       (list hal-cmsis
-	     hal-nxp))
+       (list zephyr-cmsis
+	     zephyr-hal-nxp))
       (synopsis "Hello world example from Zephyr Project")
       (description "Sample package for zephyr project")
       (license license:apsl2)))
 #+END_SRC
-
-Firmware needs to have both outputs as listed above to avoid
-referencing the build environment in it's store output.
 
 ** Modules
 
@@ -147,7 +143,7 @@ Below is an example bootloader which targets the =frdm_k64f=.
   (make-mcuboot "frdm_k64f"
 		;; Use special dev key instead of production
 		(local-file "ecdsap256-dev.pem")
-		#:extra-zephyr-modules (list hal-cmsis hal-nxp)
+		#:extra-zephyr-modules (list zephyr-cmsis zephyr-hal-nxp)
 		#:zephyr-base zephyr-3.1
 		#:extra-configure-flags
 		'(;; k64 doesn't have fancy crypto hardware
@@ -170,8 +166,18 @@ West, when available, to provide the list of locations to include and
 that is all Guest does at the moment.
 
 #+BEGIN_SRC sh
-guest list $GUIX_ENVIRONMENT/zephyr-workspace/modules
+  guest list $GUIX_ENVIRONMENT/zephyr-workspace/modules
 #+END_SRC
+
+Unfortunately `guest list` doesn't mimic the behavior of `west list`. West returns tabular information about
+the packages described in the manifest including commits and the relative location it resides.
+CMake (or perhaps python) then crunches through this output to create the `ZEPHYR_MODULES` variable.
+
+Guest just outputs this variable directly by discovering modules in a search path.
+Some information such as commits and module names are not discoverable by just looking at the store
+(We hope module names are the same as their directory name but things like HALs break this pattern).
+
+If this information is required Guix can provide it.
 
 ** Building
 
@@ -182,7 +188,7 @@ Guest is built using the GNU build system.
   ./configure && make && make install
 #+END_SRC
 
-** Extensions
+** Extensions *TESTING*
 
 Guest is extended in the same way Guix is extended, with scripts
 located in =guest/scripts=.
