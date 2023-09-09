@@ -94,6 +94,10 @@
 	    (list guile-3.0
 		  guile-libyaml)
 	    '())))
+      (native-search-paths
+       (list (search-path-specification
+	      (variable "ZEPHYR_MODULE_PATH")
+	      (files '("zephyr-workspace/modules")))))
       (synopsis "Project meta-tool for Zephyr RTOS")
       (description "Guest is a West replacement implemented in GNU Guile.")
       (license license:gpl3+))))

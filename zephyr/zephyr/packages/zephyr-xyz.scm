@@ -398,11 +398,6 @@ startup and initialization files for them.")
 		 (base32 "1yb7apbg9hpqz0lvca0r8wzr4zg3fdnzzsahkkx69d64j0vkwkcz"))))
       (build-system zephyr-module-build-system)
       (arguments `(#:workspace-path ,module-path))
-      (native-search-paths
-       (list (search-path-specification
-	      (variable "ZEPHYR_MODULES")
-	      (files `(,(string-append %zephyr-workspace-name module-path)))
-	      (separator ";"))))
       (synopsis "Zephyr module for NXP Hardware Abstraction Layer")
       (description "Provides sources for NXP HAL zephyr module")
       (license license:bsd-3))))
@@ -823,9 +818,8 @@ for embedded systems.")
        (list zcbor))
       (native-search-paths
        (list (search-path-specification
-	      (variable "ZEPHYR_MODULES")
-	      (files `(,(string-append %zephyr-workspace-name module-path)))
-	      (separator ";"))))
+	      (variable "ZEPHYR_MODULE_PATH")
+	      (files '("zephyr-workspace/bootloader")))))
       (synopsis "Secure 32 bit bootloader built for ZephyrRTOS")
       (description "MCUboot is a secure bootloader for 32-bit
 microcontrollers. It defines a common infrastructure for the
