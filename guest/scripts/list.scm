@@ -6,6 +6,10 @@
 
   #:export (guest-list))
 
+(define (zephyr-modules-env-paths)
+  "Return a list of paths retrieved from the environment"
+  (string-split (getenv "ZEPHYR_MODULE_PATH") #\:))
+
 (define-command (guest-list . args)
   (synopsis "print $ZEPHYR_MODULES for cmake")
   (match args
@@ -16,4 +20,8 @@
 Print the ZEPHYR_MODULES cmake variable for modules found in SEARCH-PATH\n")))
     ((directories ...)
      (display (zephyr-modules-cmake-argument
-	       (find-zephyr-modules directories))))))
+	       (find-zephyr-modules (append directories
+					    (zephyr-modules-env-paths))))))
+    (()
+     (display (zephyr-modules-cmake-argument
+	       (find-zephyr-modules (zephyr-modules-env-paths)))))))
