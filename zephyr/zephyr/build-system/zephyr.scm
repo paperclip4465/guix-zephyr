@@ -28,6 +28,7 @@
 
 (define %zephyr-build-system-modules
   `((zephyr build zephyr-build-system)
+    (zephyr build utils)
     ,@%cmake-build-system-modules))
 
 (define default-zephyr-base
@@ -96,6 +97,7 @@
 		       (substitutable? #t)
 		       (imported-modules %zephyr-build-system-modules)
 		       (modules '((zephyr build zephyr-build-system)
+				  (zephyr build utils)
 				  (guix build utils))))
   "Build SOURCE using CMAKE, and with INPUTS. This assumes that SOURCE
 provides a 'CMakeLists.txt' file as its build system."
