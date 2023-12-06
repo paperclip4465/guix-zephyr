@@ -33,7 +33,7 @@
 
 (define default-zephyr-base
   (module-ref (resolve-interface '(zephyr packages zephyr))
-	      'zephyr-3.1))
+	      'zephyr-3.5))
 
 (define default-zephyr-sdk
   (module-ref (resolve-interface '(zephyr packages zephyr))

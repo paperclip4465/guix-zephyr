@@ -16,7 +16,7 @@
   (let ((commit "53d3415c14d60f8f4bfca54bfbc5d5a667d7e724"))
     (package
       (name "zephyr-canopennode")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "http://www.can-cia.org")
       (source
        (origin
@@ -41,7 +41,7 @@ built on top of CAN.")
   (let ((commit "ef76d3456db07e4959df555047d6962279528c8d"))
     (package
       (name "zephyr-chre")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -73,7 +73,7 @@ different devices.")
   (let ((commit "5f86244bad4ad5a590e084f0e72ba7a1416c2edf"))
     (package
       (name "zephyr-cmsis")
-      (version (git-version "5.8.0" "3.1" commit))
+      (version (git-version "5.8.0" "3.5" commit))
       (home-page "http://arm-software.github.io/CMSIS_5")
       (source
        (origin
@@ -100,7 +100,7 @@ Software Interface Standard.")
   (let ((commit "1ea61a390d2bfcf3b2ecdba8f8b0b98dfdffbd11"))
     (package
       (name "zephyr-edtt")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -127,7 +127,7 @@ The EDTT (Embedded Device Test Tool) is a collection of python scripts, which in
   (let ((commit "a30531af3a95a9a3ea7d771ea8a578ebfed45514"))
     (package
       (name "zephyr-fatfs")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -153,7 +153,7 @@ with Zephyr flash memory management.")
   (let ((commit "6ce5ba26486e93d5b7696a3e23f0585932c14b16"))
     (package
       (name "zephyr-fff")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -177,7 +177,7 @@ hand-writing fake functions for testing.")
   (let ((commit "0d225ddd314379b32355a00fb669eacf911e750d"))
     (package
       (name "zephyr-hal-altera")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -205,7 +205,7 @@ and provides the high level API's for the shim drivers.")
   (let ((commit "bb4e7104132bdc22c7cc7e20057434c2979e6706"))
     (package
       (name "zephyr-hal-atmel")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -228,7 +228,7 @@ and provides the high level API's for the shim drivers.")
   (let ((commit "22b47009dc27bdd395c6ef1a66c347037a2fb585"))
     (package
       (name "zephyr-hal-espressif")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -252,7 +252,7 @@ SoCs supported on Windows, Linux and macOS.")
   (let ((commit "7f15468b07807ae6a913e0e9cbabfaa23a206bc6"))
     (package
       (name "zephyr-hal-gigadevice")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/hal_gigadevice")
       (source
        (origin
@@ -278,7 +278,7 @@ for GigaDevice MCUs")
     (package
       (name "zephyr-hal-infineon")
       ;; XXX Every component is versioned separately
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/hal_infineon")
       (source
        (origin
@@ -304,7 +304,7 @@ Infineon devices.")
   (let ((commit "5d079f1683a00b801373bbbbf5d181d4e33b30d5"))
     (package
       (name "zephyr-hal-microchip")
-      (version (git-version "1.2.1" "3.1" commit))
+      (version (git-version "1.2.1" "3.5" commit))
       (home-page  "https://github.com/zephyrproject-rtos/hal_microchip")
       (source
        (origin
@@ -329,7 +329,7 @@ Infineon devices.")
   (let ((commit "2e1c828cf4efb71679aeaec94128708a5353e031"))
     (package
       (name "zephyr-hal-nordic")
-      (version (git-version "3.0.0" "3.1" commit))
+      (version (git-version "3.0.0" "3.5" commit))
       (home-page "https://github.com/NordicSemiconductor/nrfx")
       (source
        (origin
@@ -360,7 +360,7 @@ startup and initialization files for them.")
   (let ((commit "b4d31f33238713a568e23618845702fadd67386f"))
     (package
       (name "zephyr-hal-nuvoton")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/hal_nuvoton")
       (source
        (origin
@@ -386,7 +386,7 @@ startup and initialization files for them.")
 	(commit "708c95825b0d5279620935a1356299fff5dfbc6e"))
     (package
       (name "zephyr-hal-nxp")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://nxp.com")
       (source (origin
 		(method git-fetch)
@@ -406,7 +406,7 @@ startup and initialization files for them.")
   (let ((commit "40d049f69c50b58ea20473bee14cf93f518bf262"))
     (package
       (name "zephyr-hal_openisa")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -430,7 +430,7 @@ SDK that contains only the files needed for Zephyr.")
   (let ((commit "b3a66fe6d04d87fd1533a5c8de51d0599fcd08d0"))
     (package
       (name "zephyr-hal-quicklogic")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -456,7 +456,7 @@ It is authored by the QuickLogic Corporation.")
   (let ((commit "191f5ba46fda49523cdaaef27583d1c875ba2c36"))
     (package
       (name "zephyr-hal-rpi-pico")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -482,7 +482,7 @@ assembly language.")
   (let ((commit "1ec8dd99aa4ac3e8632d2aa28a7438049bb27102"))
     (package
       (name "zephyr-hal-silabs")
-      (version (git-version "3.1.2" "3.1" commit))
+      (version (git-version "3.5.2" "3.5" commit))
       (home-page "https://www.silabs.com")
       (source
        (origin
@@ -505,7 +505,7 @@ assembly language.")
   (let ((commit "52a522ca4a8a9ec1e9bb5bb514e1ab6f102863fe"))
     (package
       (name "zephyr-hal-st")
-      (version (git-version "1.0.2" "3.1" commit))
+      (version (git-version "1.0.2" "3.5" commit))
       (home-page "https://www.st.com")
       (source
        (origin
@@ -527,7 +527,7 @@ assembly language.")
   (let ((commit "51b373cd3455b8c2b9babbf6ff41918116a442ac"))
     (package
       (name "zephyr-hal-stm32")
-      (version (git-version "1.17" "3.1" commit))
+      (version (git-version "1.17" "3.5" commit))
       (home-page "https://www.st.com")
       (source
        (origin
@@ -553,7 +553,7 @@ CMSIS headers files, one for each SoC in STM32 series.")
   (let ((commit "38573af589173259801ae6c2b34b7d4c9e626746"))
     (package
       (name "zephyr-hal-telink")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/hal_telink")
       (source
        (origin
@@ -576,7 +576,7 @@ CMSIS headers files, one for each SoC in STM32 series.")
   (let ((commit "29af528900d03af02a17b4b7f4fc93f19a81da2a"))
     (package
       (name "zephyr-hal-ti")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -598,7 +598,7 @@ CMSIS headers files, one for each SoC in STM32 series.")
   (let ((commit "63f655362423aa49507da7977a2d37142e8debeb"))
     (package
       (name "zephyr-hal-xtensa")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -621,7 +621,7 @@ CMSIS headers files, one for each SoC in STM32 series.")
   (let ((commit "2f586b4f1276fb075ee145421bdf6cbe5403aa41"))
     (package
       (name "zephyr-libmetal")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -650,7 +650,7 @@ following operating environments:
   (let ((commit "3951cf1b71ff3be086c9b9b595e473e12301337c"))
     (package
       (name "zephyr-liblc3codec")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -673,7 +673,7 @@ following operating environments:
   (let ((commit "652f2c5646e79b881e6f3099686ad3b7af9e216c"))
     (package
       (name "zephyr-littlefs")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/littlefs")
       (source
        (origin
@@ -696,7 +696,7 @@ following operating environments:
   (let ((commit "0257b50905695192d095667b1c3abb80346db1a1"))
     (package
       (name "zephyr-loramac-node")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/loramac-node")
       (source
        (origin
@@ -721,7 +721,7 @@ SX1276/77/78/79, SX1261/2 and LR1110 radio drivers.")
   (let ((commit "487bcde705b6f453d053f28dbba4dd9f353d1ccb"))
     (package
       (name "zephyr-lvgl")
-      (version (git-version "8.3.7" "3.1" commit))
+      (version (git-version "8.3.7" "3.5" commit))
       (home-page "https://lvgl.io")
       (source
        (origin
@@ -746,7 +746,7 @@ effects and a low memory footprint.")
   (let ((commit "8e303c264fc21c2116dc612658003a22e933124d"))
     (package
       (name "zephyr-lz4")
-      (version (git-version "1.9.3" "3.1" commit))
+      (version (git-version "1.9.3" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -774,7 +774,7 @@ systems.")
   (let ((commit "7fed49c9b9f983ad6416986661ef637459723bcb"))
     (package
       (name "zephyr-mbedtls")
-      (version (git-version "3.4.0" "3.1" commit))
+      (version (git-version "3.4.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -802,7 +802,7 @@ for embedded systems.")
 	(commit "e58ea98aec6e5539c5f872a98059e461d0155bbb"))
     (package
       (name "zephyr-mcuboot")
-      (version (git-version "1.10.0" "3.1.0" commit))
+      (version (git-version "1.10.0" "3.5.0" commit))
       (home-page "https://mcuboot.com")
       (source (origin
 		(method git-fetch)
@@ -831,7 +831,7 @@ provides a secure bootloader that enables easy software upgrade.")
   (let ((commit "a5163c1800a5243f8b05d84c942da008df4cb666"))
     (package
       (name "zephyr-mipi-sys-t")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -861,7 +861,7 @@ MIPI SyS-T API which generates the MIPI SyS-T data protocol.")
   (let ((commit "dc4deed54fd4c7e1935e3b6387eedf21bb45dc38"))
     (package
       (name "zephyr-nanopb")
-      (version (git-version "0.4.7" "3.1" commit))
+      (version (git-version "0.4.7" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -886,7 +886,7 @@ microcontrollers, but fits any memory restricted system.")
   (let ((commit "e0828aa9629b533644dc96ff6d1295c939bd713c"))
     (package
       (name "zephyr-net-tools")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/net-tools")
       (source
        (origin
@@ -913,7 +913,7 @@ Linux.")
   (let ((commit "93406267eca506003bcb86a86927777a32e729d9"))
     (package
       (name "zephyr-nrf_hw_models")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/nrf_hw_models")
       (source
        (origin
@@ -943,7 +943,7 @@ nRF52833.")
   (let ((commit "8d53544871e1f300c478224faca6be8384ab0d04"))
     (package
       (name "zephyr-open-amp")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://github.com/OpenAMP/open-amp")
       (source
        (origin
@@ -982,7 +982,7 @@ enable development of software applications for Asymmetric Multiprocessing
   (let ((commit "b21e99b4b3d823f71c902b9174ff62b964c124f0"))
     (package
       (name "zephyr-openthread")
-      (version (git-version "14.0" "3.1" commit))
+      (version (git-version "14.0" "3.5" commit))
       (home-page "https://openthread.io")
       (source
        (origin
@@ -1007,7 +1007,7 @@ Specification is promulgated by the Thread Group.")
   (let ((commit "e87b2fc37345a62361478f0a6efd140e14180ba5"))
     (package
       (name "zephyr-picolibc")
-      (version (git-version "1.8.2" "3.1" commit))
+      (version (git-version "1.8.2" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -1036,7 +1036,7 @@ was formed by blending code from Newlib and AVR Libc.")
   (let ((commit "d4e568a920b4bd087886170a5624c167b2d0665e"))
     (package
       (name "zephyr-segger")
-      (version (git-version "3.30" "3.1" commit))
+      (version (git-version "3.30" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/segger")
       (source
        (origin
@@ -1059,7 +1059,7 @@ was formed by blending code from Newlib and AVR Libc.")
   (let ((commit "fed466c264ad078c66f7bff9218ba1d3fa0eb201"))
     (package
       (name "zephyr-sof")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://thesofproject.github.io/latest/index.html")
       (source
        (origin
@@ -1085,7 +1085,7 @@ as a community project.")
   (let ((commit "9156d050927012da87079064db59d07f03b8baf6"))
     (package
       (name "zephyr-tflite-micro")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "https://www.tensorflow.org")
       (source
        (origin
@@ -1110,7 +1110,7 @@ microcontrollers and other devices with limited memory.")
   (let ((commit "9e1f34bc08123aaad7666d3652aaa839e8178b3b"))
     (package
       (name "zephyr-tinycbor")
-      (version (git-version "0.5" "3.1" commit))
+      (version (git-version "0.5" "3.5" commit))
       (home-page "https://intel.github.io/tinycbor/current")
       (source
        (origin
@@ -1133,7 +1133,7 @@ microcontrollers and other devices with limited memory.")
   (let ((commit "3e9a49d2672ec01435ffbf0d788db6d95ef28de0"))
     (package
       (name "zephyr-tinycrypt")
-      (version (git-version "0.2.8" "3.1" commit))
+      (version (git-version "0.2.8" "3.5" commit))
       (home-page "https://github.com/intel/tinycrypt")
       (source
        (origin
@@ -1161,7 +1161,7 @@ primitives")
   (let ((commit "9893bf1cf649a2c4ee2e27293f887994f3d0da5b"))
     (package
       (name "zephyr-TraceRecorderSource")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -1185,7 +1185,7 @@ primitives")
   (let ((commit "f13209f1883232cbcb9f0c31fb4c63e7c242df0d"))
     (package
       (name "zephyr-trusted-firmware-m")
-      (version (git-version "1.6.0" "3.1" commit))
+      (version (git-version "1.6.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/trusted-firmware-m")
       (source
        (origin
@@ -1217,7 +1217,7 @@ Certified." )
   (let ((commit "c99a86b295c4887520da9d8402566d7f225c974e"))
     (package
       (name "zephyr-tf-m-tests")
-      (version (git-version "1.6.0" "3.1" commit))
+      (version (git-version "1.6.0" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/tf-m-tests")
       (source
        (origin
@@ -1243,7 +1243,7 @@ core and various secure partitions.")
   (let ((commit "f4fc2442b8e29e2a03d9899e46e5a3ea3df8c2c9"))
     (package
       (name "zephyr-psa-arch-tests")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -1272,7 +1272,7 @@ more secure products.")
   (let ((commit "a0d6981f14d4001d6f0d608d1a427f9bc6bb6d02"))
     (package
       (name "zephyr-zcbor")
-      (version (git-version "0.5.1" "3.1" commit))
+      (version (git-version "0.5.1" "3.5" commit))
       (home-page "https://github.com/zephyrproject-rtos/zcbor")
       (source
        (origin
@@ -1300,7 +1300,7 @@ standalone library which is tailored for use in microcontrollers.")
   (let ((commit "a54986aa98db4082ac56b582843bb5b5435208a6"))
     (package
       (name "zephyr-zscilib")
-      (version (git-version "0.0" "3.1" commit))
+      (version (git-version "0.0" "3.5" commit))
       (home-page "")
       (source
        (origin
@@ -1333,7 +1333,7 @@ This version of zscilib has been developed and tested against Zephyr
 
 (define* (make-mcuboot board key #:key
 		       (mcuboot zephyr-mcuboot)
-		       (zephyr-base zephyr-3.1)
+		       (zephyr-base zephyr-3.5)
 		       (extra-zephyr-modules '())
 		       (extra-configure-flags '()))
   "Create a variant of MCUBOOT configured for BOARD and KEY.

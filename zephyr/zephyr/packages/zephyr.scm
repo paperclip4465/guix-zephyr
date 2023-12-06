@@ -435,10 +435,9 @@ language is C.")
 as host tools like dtc, openocd, and qemu.")
     (license license:apsl2)))
 
-
-(define-public zephyr-3.1
-  (let ((version "3.1.0")
-	(commit "zephyr-v3.1.0"))
+(define-public zephyr-3.5
+  (let ((version "3.5.0")
+	(commit "zephyr-v3.5.0"))
     (package
       (name "zephyr")
       (version (git-version version "0" commit))
@@ -449,7 +448,7 @@ as host tools like dtc, openocd, and qemu.")
 			    (commit commit)))
 		      (file-name (git-file-name name version))
 		      (sha256
-		       (base32 "1yl5y9757xc3l037k3g1dynispv6j5zqfnzrhsqh9cx4qzd485lx"))
+		       (base32 "0mca9ca8b2xjwjg0vl5858fd9l6h0m1jqbd3zr651zryf2897a80"))
 		      (patches
 		       (search-patches "zephyr-3.1-linker-gen-abs-path.patch"))))
       (build-system copy-build-system)
