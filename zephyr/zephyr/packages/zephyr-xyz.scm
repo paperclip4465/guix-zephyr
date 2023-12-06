@@ -70,10 +70,10 @@ different devices.")
       (license license:apsl2))))
 
 (define-public zephyr-cmsis
-  (let ((commit "5f86244bad4ad5a590e084f0e72ba7a1416c2edf"))
+  (let ((commit "4b96cbb174678dcd3ca86e11e1f24bc5f8726da0"))
     (package
       (name "zephyr-cmsis")
-      (version (git-version "5.8.0" "3.5" commit))
+      (version (git-version "5.9.0" "3.5" commit))
       (home-page "http://arm-software.github.io/CMSIS_5")
       (source
        (origin
@@ -84,7 +84,7 @@ different devices.")
 	 (file-name (git-file-name name version))
 	 (sha256
 	  (base32
-	   "0f7cipnwllna7iknsnz273jkvrly16yr6wm4y2018i6njpqh67wi"))))
+	   "1sc3ngrn6wqf8aw2j99qv851b65j69pxdcxliv4c423hmw9rnc5z"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/cmsis"))
