@@ -387,14 +387,14 @@ language is C.")
 (define-public arm-zephyr-eabi-sdk
   (package
     (name "arm-zephyr-eabi-sdk")
-    (version "0.15.0")
+    (version "0.16.4")
     (home-page "https://zephyrproject.org")
     (source (origin (method git-fetch)
 		    (uri (git-reference
 			  (url "https://github.com/zephyrproject-rtos/sdk-ng")
-			  (commit "v0.15.0")))
+			  (commit "v0.16.4")))
 		    (file-name (git-file-name name version))
-		    (sha256 (base32 "04gsvh20y820dkv5lrwppbj7w3wdqvd8hcanm8hl4wi907lwlmwi"))))
+		    (sha256 (base32 "0n11a12k4gyhgkmwggdxlnnsbc9lp6f012pzz6pdgk8fz1bsms37"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build union)
@@ -407,7 +407,7 @@ language is C.")
 	 (let* ((out (assoc-ref %outputs "out"))
 		(cmake-scripts (string-append (assoc-ref %build-inputs "source")
 					      "/cmake"))
-		(sdk-out (string-append out "/zephyr-sdk-0.15.0")))
+		(sdk-out (string-append out "/zephyr-sdk-0.16.4")))
 	   (mkdir-p out)
 
 	   (match (assoc-remove! %build-inputs "source")
@@ -420,7 +420,7 @@ language is C.")
 	   (with-directory-excursion sdk-out
 	     (call-with-output-file "sdk_version"
 	       (lambda (p)
-		 (format p "0.15.0")))
+		 (format p "0.16.4")))
 	     #t)))))
     (propagated-inputs
      (list
@@ -429,7 +429,7 @@ language is C.")
     (native-search-paths
      (list (search-path-specification
 	    (variable "ZEPHYR_SDK_INSTALL_DIR")
-	    (files '("zephyr-sdk-0.15.0")))))
+	    (files '("zephyr-sdk-0.16.4")))))
     (synopsis "SDK for zephyrRTOS")
     (description "zephyr-sdk contains bundles a complete gcc toolchain as well
 as host tools like dtc, openocd, and qemu.")
