@@ -47,31 +47,31 @@ These are the projects which actually provide ~main~.
 Firmware can be defined like so.
 
 #+BEGIN_SRC scheme
-  (use-modules
-   (guix packages)
-   (gnu packages)
-   (zephyr packages zephyr)
-   (zephyr packages zephyr-xyz))
+  (use-modules (guix gexp)
+               ((guix licenses)
+                #:prefix license:)
+               (guix packages)
+               (zephyr build-system zephyr)
+               (zephyr packages zephyr)
+               (zephyr packages zephyr-xyz))
 
   (define-public zephyr-hello-world-frdm-k64f
     (package
       (name "zephyr-hello-world-frdm-k64f")
-      (version (package-version zephyr))
+      (version (package-version zephyr-3.5))
       (home-page "https://zephyrproject.org")
-      (source (file-append (package-source zephyr-3.1)
-			   "/samples/hello_world"))
+      (source
+       (file-append (package-source zephyr-3.5) "/samples/hello_world"))
       (build-system zephyr-build-system)
       (arguments
        `(#:configure-flags '("-DBOARD=frdm_k64f")
-	 ;; The zephyr-build-system accepts additional arguments
-	 ;; such as bin-name and zephyr
-	 ;; XXX: bin-name and zephyr should be optional but currently
-	 ;; bin-name is required
-	 #:bin-name "hello-world"
-	 #:zephyr ,zephyr-3.1))
-      (inputs
-       (list zephyr-cmsis
-	     zephyr-hal-nxp))
+         ;; The zephyr-build-system accepts additional arguments
+         ;; such as bin-name and zephyr
+         ;; XXX: bin-name and zephyr should be optional but currently
+         ;; bin-name is required
+         #:bin-name "hello-world"
+         #:zephyr ,zephyr-3.5))
+      (inputs (list zephyr-cmsis zephyr-hal-nxp))
       (synopsis "Hello world example from Zephyr Project")
       (description "Sample package for zephyr project")
       (license license:apsl2)))
@@ -84,25 +84,34 @@ board definitions, drivers, misc libraries, you name it. Anything that
 does not provide ~main~ is likely a module.
 
 #+BEGIN_SRC scheme
+  (use-modules (guix gexp)
+               (guix git-download)
+               ((guix licenses)
+                #:prefix license:)
+               (guix packages)
+               (zephyr build-system zephyr-module))
+
   (define-public hal-nxp
     (let ((module-path "/modules/hal/nxp"))
       (package
-	(name "hal-nxp")
-	(version "3.1.0")
-	(home-page "https://nxp.com")
-	(source (origin
-		  (method git-fetch)
-		  (uri (git-reference
-			(url "https://github.com/zephyrproject-rtos/hal_nxp")
-			(commit "708c95825b0d5279620935a1356299fff5dfbc6e")))
-		  (file-name (git-file-name name version))
-		  (sha256
-		   (base32 "1c0i26bpk6cyhr1q4af183jclfmxshv4d15i7k3cz7brzb12m8q1"))))
-	(build-system zephyr-module-build-system)
-	(arguments `(#:workspace-path ,module-path))
-	(synopsis "Zephyr module for NXP Hardware Abstraction Layer")
-	(description "Provides sources for NXP HAL zephyr module")
-	(license license:bsd-3))))
+        (name "hal-nxp")
+        (version "3.5.0")
+        (home-page "https://nxp.com")
+        (source
+         (origin
+           (method git-fetch)
+           (uri (git-reference
+                 (url "https://github.com/zephyrproject-rtos/hal_nxp")
+                 (commit "708c95825b0d5279620935a1356299fff5dfbc6e")))
+           (file-name (git-file-name name version))
+           (sha256
+            (base32 "1yb7apbg9hpqz0lvca0r8wzr4zg3fdnzzsahkkx69d64j0vkwkcz"))))
+        (build-system zephyr-module-build-system)
+        (arguments
+         `(#:workspace-path ,module-path))
+        (synopsis "Zephyr module for NXP Hardware Abstraction Layer")
+        (description "Provides sources for NXP HAL zephyr module")
+        (license license:bsd-3))))
 #+END_SRC
 
 The ~zephyr-module-build-system~ is just a specialized
