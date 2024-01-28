@@ -162,7 +162,7 @@ Below is an example bootloader which targets the =frdm_k64f=.
 		  "-DCONFIG_BOOT_ECDSA_TINYCRYPT=y"))
 #+END_SRC
 
-* Guest (Guile + West) v0.0.1
+* Guest (Guile + West)
 
 Guest is a command line utility for working with Guix based Zephyr
 projects.  Using ~guix build~ in the CI is all well in good but during
@@ -187,17 +187,4 @@ Some information such as commits and module names are not discoverable by just l
 (We hope module names are the same as their directory name but things like HALs break this pattern).
 
 If this information is required Guix can provide it.
-
-** Building
-
-Guest is built using the GNU build system.
-
-#+BEGIN_SRC sh
-  guix shell -D -f guix.scm
-  ./configure && make && make install
-#+END_SRC
-
-** Extensions *TESTING*
-
-Guest is extended in the same way Guix is extended, with scripts
-located in =guest/scripts=.
+Guest can be installed with ~guix install guest~.
