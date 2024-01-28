@@ -1,4 +1,2 @@
 **/*.go
 **/*.tar.gz
-pre-inst-env
-scripts/guest

@@ -11,18 +11,18 @@
   #:use-module (gnu packages texinfo))
 
 (define-public guest
-  (let ((commit "dad368fc7c55b5f50ef984dc583c7b18da9bda85"))
+  (let ((commit "98c2e428753c99ee419a1d4c955da13f7030a9a1"))
     (package
       (name "guest")
-      (version (git-version "0.0.1" "" commit))
-      (home-page "https://github.com/paperclip4465/guix-zephyr")
+      (version "0.0.2")
+      (home-page "https://github.com/paperclip4465/guest-zephyr")
       (source (origin (method git-fetch)
 		      (uri (git-reference
-			    (url "https://github.com/paperclip4465/guix-zephyr")
+			    (url "https://github.com/paperclip4465/guest")
 			    (commit commit)))
 		      (file-name (git-file-name name version))
 		      (sha256
-		       (base32 "055r0a5bkjrzhgcn4lla30v6jlbd1scplnvm4f53drvhc3hd857a"))))
+		       (base32 "1qxvbjkvy5gyjl4hyag3pbs51lxw7h06wfjm7c9m9015gv1bxblr"))))
       (build-system gnu-build-system)
       (arguments
        `(#:modules

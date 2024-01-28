@@ -1,1 +1,0 @@
-zephyr/zephyr/packages/guest.scm
