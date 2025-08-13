@@ -42,19 +42,19 @@
       (version "2.38")
       (source
        (origin (method git-fetch)
-	       (uri (git-reference
-		     (url "https://github.com/zephyrproject-rtos/binutils-gdb")
-		     (commit "6a1be1a6a571957fea8b130e4ca2dcc65e753469")))
-	       (file-name (git-file-name name version))
-	       (sha256 (base32 "0ylnl48jj5jk3jrmvfx5zf8byvwg7g7my7jwwyqw3a95qcyh0isr"))))
+               (uri (git-reference
+                     (url "https://github.com/zephyrproject-rtos/binutils-gdb")
+                     (commit "6a1be1a6a571957fea8b130e4ca2dcc65e753469")))
+               (file-name (git-file-name name version))
+               (sha256 (base32 "0ylnl48jj5jk3jrmvfx5zf8byvwg7g7my7jwwyqw3a95qcyh0isr"))))
       (arguments
        (substitute-keyword-arguments (package-arguments xbinutils)
-	 ((#:tests? tests '()) #f)
-	 ((#:configure-flags flags)
-	  #~(cons* "--enable-multilib"
-		   "--disable-gdb"
-		   "--disable-sim"
-		   #$flags))))
+         ((#:tests? tests '()) #f)
+         ((#:configure-flags flags)
+          #~(cons* "--enable-multilib"
+                   "--disable-gdb"
+                   "--disable-sim"
+                   #$flags))))
       (native-inputs
        (list texinfo
               bison
@@ -69,95 +69,95 @@
     (inherit isl)
     (version "0.15")
     (source (origin
-	      (method url-fetch)
-	      (uri (list (string-append "mirror://sourceforge/libisl/isl-"
-					version ".tar.gz")))
-	      (sha256
-	       (base32
-		"11vrpznpdh7w8jp4wm4i8zqhzq2h7nix71xfdddp8xnzhz26gyq2"))))))
+              (method url-fetch)
+              (uri (list (string-append "mirror://sourceforge/libisl/isl-"
+                                        version ".tar.gz")))
+              (sha256
+               (base32
+                "11vrpznpdh7w8jp4wm4i8zqhzq2h7nix71xfdddp8xnzhz26gyq2"))))))
 
 
 (define-public gcc-arm-zephyr-eabi-12
   (let ((xgcc (cross-gcc "arm-zephyr-eabi"
-			 #:xgcc gcc-12
-			 #:xbinutils arm-zephyr-eabi-binutils)))
+                         #:xgcc gcc-12
+                         #:xbinutils arm-zephyr-eabi-binutils)))
     (package
       (inherit xgcc)
       (name "gcc-arm-zephyr-eabi")
       (version "12.1.0")
       (source (origin (method git-fetch)
-		      (uri (git-reference
-			    (url "https://github.com/zephyrproject-rtos/gcc")
-			    (commit "0218469df050c33479a1d5be3e5239ac0eb351bf")))
-		      (file-name (git-file-name (package-name xgcc) version))
-		      (sha256
-		       (base32 "1s409qmidlvzaw1ns6jaanigh3azcxisjplzwn7j2n3s33b76zjk"))
-		      (patches
-		       (search-patches "gcc-12-cross-environment-variables.patch"
-				       "gcc-cross-gxx-include-dir.patch"))))
+                      (uri (git-reference
+                            (url "https://github.com/zephyrproject-rtos/gcc")
+                            (commit "0218469df050c33479a1d5be3e5239ac0eb351bf")))
+                      (file-name (git-file-name (package-name xgcc) version))
+                      (sha256
+                       (base32 "1s409qmidlvzaw1ns6jaanigh3azcxisjplzwn7j2n3s33b76zjk"))
+                      (patches
+                       (search-patches "gcc-12-cross-environment-variables.patch"
+                                       "gcc-cross-gxx-include-dir.patch"))))
       (native-inputs
        (modify-inputs (package-native-inputs xgcc)
-	 (delete "isl")
-	 (prepend flex
-		  isl-0.15)))
+         (delete "isl")
+         (prepend flex
+                  isl-0.15)))
       (arguments
        (substitute-keyword-arguments (package-arguments xgcc)
-	 ((#:phases phases)
-	  #~(modify-phases #$phases
-	      (add-after 'unpack 'fix-genmultilib
-		(lambda _
-		  (substitute* "gcc/genmultilib"
-		    (("#!/bin/sh") (string-append "#!" (which "sh"))))
-		  #t))
-	      (add-after 'set-paths 'augment-CPLUS_INCLUDE_PATH
-		(lambda* (#:key inputs #:allow-other-keys)
-		  (let ((gcc (assoc-ref inputs  "gcc")))
-		    ;; Remove the default compiler from CPLUS_INCLUDE_PATH to
-		    ;; prevent header conflict with the GCC from native-inputs.
-		    (setenv "CPLUS_INCLUDE_PATH"
-			    (string-join
-			     (delete (string-append gcc "/include/c++")
-				     (string-split (getenv "CPLUS_INCLUDE_PATH")
-						   #\:))
-			     ":"))
-		    (format #t
-			    "environment variable `CPLUS_INCLUDE_PATH' changed to ~a~%"
-			    (getenv "CPLUS_INCLUDE_PATH"))
-		    #t)))))
-	 ((#:configure-flags flags)
-	  #~(append (list "--enable-multilib"
-			  "--with-newlib"
-			  "--with-multilib-list=rmprofile"
-			  "--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
-			  "--enable-plugins"
-			  "--disable-libatomic"
-			  "--disable-libgomp"
-			  "--disable-libmudflap"
-			  "--disable-libquadmath"
-			  "--disable-libssp"
-			  "--disable-nls"
-			  "--disable-shared"
-			  "--disable-threads"
-			  "--disable-tls"
-			  "--with-gnu-ld"
-			  "--with-gnu-as"
-			  "--enable-initfini-array")
-		    (delete "--disable-multilib" #$flags)))
-	 ((#:make-flags flags)
-	  #~(append '("CFLAGS_FOR_TARGET=-g -O2")
-		    #$flags))))
+         ((#:phases phases)
+          #~(modify-phases #$phases
+              (add-after 'unpack 'fix-genmultilib
+                (lambda _
+                  (substitute* "gcc/genmultilib"
+                    (("#!/bin/sh") (string-append "#!" (which "sh"))))
+                  #t))
+              (add-after 'set-paths 'augment-CPLUS_INCLUDE_PATH
+                (lambda* (#:key inputs #:allow-other-keys)
+                  (let ((gcc (assoc-ref inputs  "gcc")))
+                    ;; Remove the default compiler from CPLUS_INCLUDE_PATH to
+                    ;; prevent header conflict with the GCC from native-inputs.
+                    (setenv "CPLUS_INCLUDE_PATH"
+                            (string-join
+                             (delete (string-append gcc "/include/c++")
+                                     (string-split (getenv "CPLUS_INCLUDE_PATH")
+                                                   #\:))
+                             ":"))
+                    (format #t
+                            "environment variable `CPLUS_INCLUDE_PATH' changed to ~a~%"
+                            (getenv "CPLUS_INCLUDE_PATH"))
+                    #t)))))
+         ((#:configure-flags flags)
+          #~(append (list "--enable-multilib"
+                          "--with-newlib"
+                          "--with-multilib-list=rmprofile"
+                          "--with-host-libstdcxx=-static-libgcc -Wl,-Bstatic,-lstdc++,-Bdynamic -lm"
+                          "--enable-plugins"
+                          "--disable-libatomic"
+                          "--disable-libgomp"
+                          "--disable-libmudflap"
+                          "--disable-libquadmath"
+                          "--disable-libssp"
+                          "--disable-nls"
+                          "--disable-shared"
+                          "--disable-threads"
+                          "--disable-tls"
+                          "--with-gnu-ld"
+                          "--with-gnu-as"
+                          "--enable-initfini-array")
+                    (delete "--disable-multilib" #$flags)))
+         ((#:make-flags flags)
+          #~(append '("CFLAGS_FOR_TARGET=-g -O2")
+                    #$flags))))
       (native-search-paths
        (list (search-path-specification
-	      (variable "CROSS_C_INCLUDE_PATH")
-	      (files '("arm-zephyr-eabi/include")))
-	     (search-path-specification
-	      (variable "CROSS_CPLUS_INCLUDE_PATH")
-	      (files '("arm-zephyr-eabi/include"
-		       "arm-zephyr-eabi/c++"
-		       "arm-zephyr-eabi/c++/arm-zephyr-eabi")))
-	     (search-path-specification
-	      (variable "CROSS_LIBRARY_PATH")
-	      (files '("arm-zephyr-eabi/lib")))))
+              (variable "CROSS_C_INCLUDE_PATH")
+              (files '("arm-zephyr-eabi/include")))
+             (search-path-specification
+              (variable "CROSS_CPLUS_INCLUDE_PATH")
+              (files '("arm-zephyr-eabi/include"
+                       "arm-zephyr-eabi/c++"
+                       "arm-zephyr-eabi/c++/arm-zephyr-eabi")))
+             (search-path-specification
+              (variable "CROSS_LIBRARY_PATH")
+              (files '("arm-zephyr-eabi/lib")))))
       (home-page "https://zephyrproject.org")
       (synopsis "GCC for zephyr RTOS"))))
 
@@ -166,43 +166,44 @@
     (name "newlib")
     (version "3.3")
     (source (origin
-	      (method git-fetch)
-	      (uri (git-reference
-		    (url "https://github.com/zephyrproject-rtos/newlib-cygwin")
-		    (commit "4e150303bcc1e44f4d90f3489a4417433980d5ff")))
-	      (sha256
-	       (base32 "08qwjpj5jhpc3p7a5mbl7n6z7rav5yqlydqanm6nny42qpa8kxij"))))
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/zephyrproject-rtos/newlib-cygwin")
+                    (commit "4e150303bcc1e44f4d90f3489a4417433980d5ff")))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32 "08qwjpj5jhpc3p7a5mbl7n6z7rav5yqlydqanm6nny42qpa8kxij"))))
     (build-system gnu-build-system)
     (arguments
      `(#:out-of-source? #t
        #:configure-flags '("--target=arm-zephyr-eabi"
-			   "--enable-headers"
-			   "--enable-newlib-io-long-long"
-			   "--enable-newlib-io-float"
-			   "--enable-newlib-io-c99-formats"
-			   "--enable-newlib-retargetable-locking"
-			   "--enable-newlib-lite-exit"
-			   "--enable-newlib-multithread"
-			   "--enable-newlib-register-fini"
-			   "--enable-newlib-extra-sections"
-			   "--disable-newlib-nano-malloc"
-			   "--disable-newlib-nano-formatted-io"
-			   "--disable-newlib-wide-orient"
-			   "--disable-newlib-fseek-optimization"
-			   "--disable-newlib-supplied-syscalls"
-			   "--disable-newlib-target-optspace"
-			   "--disable-nls")
+                           "--enable-headers"
+                           "--enable-newlib-io-long-long"
+                           "--enable-newlib-io-float"
+                           "--enable-newlib-io-c99-formats"
+                           "--enable-newlib-retargetable-locking"
+                           "--enable-newlib-lite-exit"
+                           "--enable-newlib-multithread"
+                           "--enable-newlib-register-fini"
+                           "--enable-newlib-extra-sections"
+                           "--disable-newlib-nano-malloc"
+                           "--disable-newlib-nano-formatted-io"
+                           "--disable-newlib-wide-orient"
+                           "--disable-newlib-fseek-optimization"
+                           "--disable-newlib-supplied-syscalls"
+                           "--disable-newlib-target-optspace"
+                           "--disable-nls")
        #:make-flags '("CFLAGS_FOR_TARGET=\"-O2\"")
        #:phases
        (modify-phases %standard-phases
-	 (add-after 'unpack 'fix-references-to-/bin/sh
-	   (lambda _
-	     (substitute* '("libgloss/arm/cpu-init/Makefile.in"
-			    "libgloss/arm/Makefile.in"
-			    "libgloss/libnosys/Makefile.in"
-			    "libgloss/Makefile.in")
-	       (("/bin/sh") (which "sh")))
-	     #t)))))
+         (add-after 'unpack 'fix-references-to-/bin/sh
+           (lambda _
+             (substitute* '("libgloss/arm/cpu-init/Makefile.in"
+                            "libgloss/arm/Makefile.in"
+                            "libgloss/libnosys/Makefile.in"
+                            "libgloss/Makefile.in")
+               (("/bin/sh") (which "sh")))
+             #t)))))
     (native-inputs
      `(("xbinutils" ,arm-zephyr-eabi-binutils)
        ("xgcc" ,gcc-arm-zephyr-eabi-12)
@@ -213,7 +214,7 @@
 systems.  It is a conglomeration of several library parts that are easily
 usable on embedded products.")
     (license (license:non-copyleft
-	      "https://www.sourceware.org/newlib/COPYING.NEWLIB"))))
+              "https://www.sourceware.org/newlib/COPYING.NEWLIB"))))
 
 (define-public arm-zephyr-eabi-newlib-nano
   (package (inherit arm-zephyr-eabi-newlib)
@@ -221,61 +222,61 @@ usable on embedded products.")
     (arguments
      (substitute-keyword-arguments (package-arguments arm-zephyr-eabi-newlib)
        ((#:configure-flags flags)
-	''("--target=arm-zephyr-eabi"
-	   "--enable-multilib"
-	   "--enable-newlib-reent-small"
-	   "--enable-lite-exit"
-	   "--enable-newlib-global-atexit"
-	   "--enable-newlib-gcc-libstdcxx"
-	   "--enable-newlib-install-in-target"
-	   "--enable-newlib-io-float"
-	   "--enable-newlib-fvwrite-in-streamio"
-	   "--enable-newlib-atexit-dynamic-alloc"
-	   "--enable-newlib-global-atexit"
-	   "--enable-newlib-multithread"
-	   "--enable-newlib-retargetable-locking"
-	   "--enable-newlib-extra-sections"
-	   "--enable-newlib-target-optspace"
-	   "--enable-newlib-nano-malloc"
-	   "--enable-newlib-nano-formatted-io"
-	   "--enable-newlib-io-c99-formats"
-	   "--disable-newlib-io-long-long"
-	   "--disable-newlib-supplied-syscalls"
-	   "--disable-newlib-fseek-optimization"
-	   "--disable-newlib-wide-orient"
-	   "--disable-newlib-unbuf-stream-opt"
-	   "--disable-lto"
-	   "--disable-nls"))
+        ''("--target=arm-zephyr-eabi"
+           "--enable-multilib"
+           "--enable-newlib-reent-small"
+           "--enable-lite-exit"
+           "--enable-newlib-global-atexit"
+           "--enable-newlib-gcc-libstdcxx"
+           "--enable-newlib-install-in-target"
+           "--enable-newlib-io-float"
+           "--enable-newlib-fvwrite-in-streamio"
+           "--enable-newlib-atexit-dynamic-alloc"
+           "--enable-newlib-global-atexit"
+           "--enable-newlib-multithread"
+           "--enable-newlib-retargetable-locking"
+           "--enable-newlib-extra-sections"
+           "--enable-newlib-target-optspace"
+           "--enable-newlib-nano-malloc"
+           "--enable-newlib-nano-formatted-io"
+           "--enable-newlib-io-c99-formats"
+           "--disable-newlib-io-long-long"
+           "--disable-newlib-supplied-syscalls"
+           "--disable-newlib-fseek-optimization"
+           "--disable-newlib-wide-orient"
+           "--disable-newlib-unbuf-stream-opt"
+           "--disable-lto"
+           "--disable-nls"))
        ((#:make-flags flags)
-	''("CFLAGS_FOR_TARGET=\"-mthumb-interwork\""))
+        ''("CFLAGS_FOR_TARGET=\"-mthumb-interwork\""))
        ((#:phases phases)
-	`(modify-phases ,phases
-	   (add-after 'install 'hardlink-newlib
-	     (lambda* (#:key outputs #:allow-other-keys)
-	       (let ((out (assoc-ref outputs "out")))
-		 ;; The nano.specs file says that newlib-nano files should end
-		 ;; in "_nano.a" instead of just ".a".  Note that this applies
-		 ;; to all the multilib folders too.
-		 (for-each
-		  (lambda (file)
-		    (link file
-			  (string-append
-			   ;; Strip ".a" off the end
-			   (substring file 0 (- (string-length file) 2))
-			   ;; Add "_nano.a" onto the end
-			   "_nano.a")))
-		  (find-files
-		   out
-		   "^(libc.a|libg.a|librdimon.a|libstdc\\+\\+.a|libsupc\\+\\+.a)$"))
+        `(modify-phases ,phases
+           (add-after 'install 'hardlink-newlib
+             (lambda* (#:key outputs #:allow-other-keys)
+               (let ((out (assoc-ref outputs "out")))
+                 ;; The nano.specs file says that newlib-nano files should end
+                 ;; in "_nano.a" instead of just ".a".  Note that this applies
+                 ;; to all the multilib folders too.
+                 (for-each
+                  (lambda (file)
+                    (link file
+                          (string-append
+                           ;; Strip ".a" off the end
+                           (substring file 0 (- (string-length file) 2))
+                           ;; Add "_nano.a" onto the end
+                           "_nano.a")))
+                  (find-files
+                   out
+                   "^(libc.a|libg.a|librdimon.a|libstdc\\+\\+.a|libsupc\\+\\+.a)$"))
 
-		 ;; newlib.h is usually in this location instead so both
-		 ;; newlib and newlib-nano can be in the toolchain at the same
-		 ;; time
-		 (mkdir (string-append out "/arm-zephyr-eabi/include/newlib-nano"))
-		 (symlink
-		  "../newlib.h"
-		  (string-append out "/arm-zephyr-eabi/include/newlib-nano/newlib.h"))
-		 #t)))))))
+                 ;; newlib.h is usually in this location instead so both
+                 ;; newlib and newlib-nano can be in the toolchain at the same
+                 ;; time
+                 (mkdir (string-append out "/arm-zephyr-eabi/include/newlib-nano"))
+                 (symlink
+                  "../newlib.h"
+                  (string-append out "/arm-zephyr-eabi/include/newlib-nano/newlib.h"))
+                 #t)))))))
     (synopsis "Newlib variant for small systems with limited memory")))
 
 (define (make-libstdc++-arm-zephyr-eabi xgcc newlib)
@@ -284,61 +285,61 @@ usable on embedded products.")
       (name "libstdc++-arm-zephyr-eabi")
       (arguments
        (substitute-keyword-arguments (package-arguments libstdc++)
-	 ((#:configure-flags flags)
-	  #~(append `("--host=arm-none-eabi"
-		      "--target=arm-zephyr-eabi"
-		      "--disable-libstdcxx-pch"
-		      "--enable-multilib"
-		      "--with-multilib-list=rmprofile"
-		      "--disable-shared"
-		      "--disable-tls"
-		      "--disable-plugin"
-		      "--with-newlib"
-		      "--with-gnu-ld"
-		      "--with-gnu-as"
-		      ,(string-append "--with-gxx-include-dir="
-				      #$output
-				      "/arm-zephyr-eabi/include/c++"))))))
+         ((#:configure-flags flags)
+          #~(append `("--host=arm-none-eabi"
+                      "--target=arm-zephyr-eabi"
+                      "--disable-libstdcxx-pch"
+                      "--enable-multilib"
+                      "--with-multilib-list=rmprofile"
+                      "--disable-shared"
+                      "--disable-tls"
+                      "--disable-plugin"
+                      "--with-newlib"
+                      "--with-gnu-ld"
+                      "--with-gnu-as"
+                      ,(string-append "--with-gxx-include-dir="
+                                      #$output
+                                      "/arm-zephyr-eabi/include/c++"))))))
       (native-inputs
        `(("newlib" ,newlib)
-	 ("xgcc" ,xgcc)
-	 ,@(package-native-inputs libstdc++))))))
+         ("xgcc" ,xgcc)
+         ,@(package-native-inputs libstdc++))))))
 
 (define (arm-zephyr-eabi-toolchain xgcc newlib)
   "Produce a cross-compiler zephyr toolchain package with the compiler XGCC and the C
 library variant NEWLIB."
   (let ((newlib-with-xgcc (package (inherit newlib)
-			    (native-inputs
-			     (alist-replace "xgcc" (list xgcc)
-					    (package-native-inputs newlib))))))
+                            (native-inputs
+                             (alist-replace "xgcc" (list xgcc)
+                                            (package-native-inputs newlib))))))
     (package
       (name (string-append "arm-zephyr-eabi"
-			   (if (string=? (package-name newlib-with-xgcc)
-					 "newlib-nano")
-			       "-nano" "")
-			   "-toolchain"))
+                           (if (string=? (package-name newlib-with-xgcc)
+                                         "newlib-nano")
+                               "-nano" "")
+                           "-toolchain"))
       (version (package-version xgcc))
       (source #f)
       (build-system trivial-build-system)
       (arguments
        '(#:modules ((guix build union)
-		    (guix build utils))
-	 #:builder
-	 (begin
-	   (use-modules (ice-9 match)
-			(guix build union)
-			(guix build utils))
-	   (let ((out (assoc-ref %outputs "out")))
-	     (mkdir-p out)
-	     (match %build-inputs
-	       (((names . directories) ...)
-		(union-build (string-append out "/arm-zephyr-eabi")
-			     directories)
-		#t))))))
+                    (guix build utils))
+         #:builder
+         (begin
+           (use-modules (ice-9 match)
+                        (guix build union)
+                        (guix build utils))
+           (let ((out (assoc-ref %outputs "out")))
+             (mkdir-p out)
+             (match %build-inputs
+               (((names . directories) ...)
+                (union-build (string-append out "/arm-zephyr-eabi")
+                             directories)
+                #t))))))
       (propagated-inputs
        `(("binutils" ,arm-zephyr-eabi-binutils)
-	 ("gcc" ,xgcc)
-	 ("newlib" ,newlib-with-xgcc)))
+         ("gcc" ,xgcc)
+         ("newlib" ,newlib-with-xgcc)))
       (synopsis "Complete GCC tool chain for ARM zephyrRTOS development")
       (description "This package provides a complete GCC tool chain for ARM
 bare metal development with zephyr rtos.  This includes the GCC arm-zephyr-eabi cross compiler
@@ -365,23 +366,23 @@ language is C.")
     (version "12.1")
     (source
      (origin (method git-fetch)
-	     (uri (git-reference
-		   (url "https://github.com/zephyrproject-rtos/binutils-gdb")
-		   (commit "db8bd068edeaac983273727d9322fc1867702d15")))
-	     (file-name (git-file-name name version))
-	     (sha256 (base32 "082lh9p3jcqnmk31yr7zmd1yrpp4z49xljg06rrfipk8x0z2sv23"))))
+             (uri (git-reference
+                   (url "https://github.com/zephyrproject-rtos/binutils-gdb")
+                   (commit "db8bd068edeaac983273727d9322fc1867702d15")))
+             (file-name (git-file-name name version))
+             (sha256 (base32 "082lh9p3jcqnmk31yr7zmd1yrpp4z49xljg06rrfipk8x0z2sv23"))))
     (native-inputs
      (modify-inputs (package-native-inputs gdb/pinned)
        (append bison flex)))
     (arguments
      (substitute-keyword-arguments (package-arguments gdb/pinned)
        ((#:configure-flags flags)
-	`(cons* "--target=arm-zephyr-eabi"
-		"--enable-multilib"
-		"--enable-interwork"
-		"--enable-languages=c"
-		"--disable-nls"
-		(delete "--enable-languages=" ,flags)))))))
+        `(cons* "--enable-targets=all"
+                "--enable-multilib"
+                "--enable-interwork"
+                "--enable-languages=c"
+                "--disable-nls"
+                (delete "--enable-languages=" ,flags)))))))
 
 (define-public arm-zephyr-eabi-sdk
   (package
@@ -389,46 +390,46 @@ language is C.")
     (version "0.16.4")
     (home-page "https://zephyrproject.org")
     (source (origin (method git-fetch)
-		    (uri (git-reference
-			  (url "https://github.com/zephyrproject-rtos/sdk-ng")
-			  (commit "v0.16.4")))
-		    (file-name (git-file-name name version))
-		    (sha256 (base32 "0n11a12k4gyhgkmwggdxlnnsbc9lp6f012pzz6pdgk8fz1bsms37"))))
+                    (uri (git-reference
+                          (url "https://github.com/zephyrproject-rtos/sdk-ng")
+                          (commit "v0.16.4")))
+                    (file-name (git-file-name name version))
+                    (sha256 (base32 "0n11a12k4gyhgkmwggdxlnnsbc9lp6f012pzz6pdgk8fz1bsms37"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build union)
-		  (guix build utils))
+                  (guix build utils))
        #:builder
        (begin
-	 (use-modules (guix build union)
-		      (ice-9 match)
-		      (guix build utils))
-	 (let* ((out (assoc-ref %outputs "out"))
-		(cmake-scripts (string-append (assoc-ref %build-inputs "source")
-					      "/cmake"))
-		(sdk-out (string-append out "/zephyr-sdk-0.16.4")))
-	   (mkdir-p out)
+         (use-modules (guix build union)
+                      (ice-9 match)
+                      (guix build utils))
+         (let* ((out (assoc-ref %outputs "out"))
+                (cmake-scripts (string-append (assoc-ref %build-inputs "source")
+                                              "/cmake"))
+                (sdk-out (string-append out "/zephyr-sdk-0.16.4")))
+           (mkdir-p out)
 
-	   (match (assoc-remove! %build-inputs "source")
-	     (((names . directories) ...)
-	      (union-build sdk-out directories)))
+           (match (assoc-remove! %build-inputs "source")
+             (((names . directories) ...)
+              (union-build sdk-out directories)))
 
-	   (copy-recursively cmake-scripts
-			     (string-append sdk-out "/cmake"))
+           (copy-recursively cmake-scripts
+                             (string-append sdk-out "/cmake"))
 
-	   (with-directory-excursion sdk-out
-	     (call-with-output-file "sdk_version"
-	       (lambda (p)
-		 (format p "0.16.4")))
-	     #t)))))
+           (with-directory-excursion sdk-out
+             (call-with-output-file "sdk_version"
+               (lambda (p)
+                 (format p "0.16.4")))
+             #t)))))
     (propagated-inputs
      (list
       arm-zephyr-eabi-nano-toolchain-12
       dtc))
     (native-search-paths
      (list (search-path-specification
-	    (variable "ZEPHYR_SDK_INSTALL_DIR")
-	    (files '("zephyr-sdk-0.16.4")))))
+            (variable "ZEPHYR_SDK_INSTALL_DIR")
+            (files '("zephyr-sdk-0.16.4")))))
     (synopsis "SDK for zephyrRTOS")
     (description "zephyr-sdk contains bundles a complete gcc toolchain as well
 as host tools like dtc, openocd, and qemu.")
@@ -436,67 +437,67 @@ as host tools like dtc, openocd, and qemu.")
 
 (define-public zephyr-3.5
   (let ((version "3.5.0")
-	(commit "zephyr-v3.5.0"))
+        (commit "zephyr-v3.5.0"))
     (package
       (name "zephyr")
       (version (git-version version "0" commit))
       (home-page "https://zephyrproject.org")
       (source (origin (method git-fetch)
-		      (uri (git-reference
-			    (url "https://github.com/zephyrproject-rtos/zephyr")
-			    (commit commit)))
-		      (file-name (git-file-name name version))
-		      (sha256
-		       (base32 "0mca9ca8b2xjwjg0vl5858fd9l6h0m1jqbd3zr651zryf2897a80"))
-		      (patches
-		       (search-patches "zephyr-3.1-linker-gen-abs-path.patch"))))
+                      (uri (git-reference
+                            (url "https://github.com/zephyrproject-rtos/zephyr")
+                            (commit commit)))
+                      (file-name (git-file-name name version))
+                      (sha256
+                       (base32 "0mca9ca8b2xjwjg0vl5858fd9l6h0m1jqbd3zr651zryf2897a80"))
+                      (patches
+                       (search-patches "zephyr-3.1-linker-gen-abs-path.patch"))))
       (build-system copy-build-system)
       (arguments
        `(#:install-plan
-	 '(("." "zephyr-workspace/zephyr"))
-	 #:phases
-	 (modify-phases %standard-phases
-	   (add-after 'unpack 'patch-cmake-scripts
-	     (lambda* _
-	       (format #t "~a~&" (getcwd))
-	       ;; Some cmake scripts assume the presence of a
-	       ;; git repository in the source directory.
-	       ;; We will just hard-code that information now
-	       (substitute* "CMakeLists.txt"
-		 (("if\\(DEFINED BUILD_VERSION\\)" all)
-		  (format #f "set(BUILD_VERSION \"~a-~a\")~&~a"
-			  ,version ,commit all))))))))
+         '(("." "zephyr-workspace/zephyr"))
+         #:phases
+         (modify-phases %standard-phases
+           (add-after 'unpack 'patch-cmake-scripts
+             (lambda* _
+               (format #t "~a~&" (getcwd))
+               ;; Some cmake scripts assume the presence of a
+               ;; git repository in the source directory.
+               ;; We will just hard-code that information now
+               (substitute* "CMakeLists.txt"
+                 (("if\\(DEFINED BUILD_VERSION\\)" all)
+                  (format #f "set(BUILD_VERSION \"~a-~a\")~&~a"
+                          ,version ,commit all))))))))
       (propagated-inputs
        (list python-3
-	     python-pyelftools
-	     python-pykwalify
-	     python-pyyaml
-	     python-packaging))
+             python-pyelftools
+             python-pykwalify
+             python-pyyaml
+             python-packaging))
       (native-search-paths
        (list (search-path-specification
-	      (variable "ZEPHYR_BASE")
-	      (files '("zephyr-workspace/zephyr")))
-	     (search-path-specification
-	      (variable "CMAKE_PREFIX_PATH")
-	      (files '("zephyr-workspace/zephyr/share/zephyr-package/cmake")))))
+              (variable "ZEPHYR_BASE")
+              (files '("zephyr-workspace/zephyr")))
+             (search-path-specification
+              (variable "CMAKE_PREFIX_PATH")
+              (files '("zephyr-workspace/zephyr/share/zephyr-package/cmake")))))
       (synopsis "Source code for zephyr rtos")
       (description "Zephyr rtos source code.")
       (license license:apsl2))))
 
 (define-public imgtool
   (package
-    (name "imgtool")
-    (version "1.9.0")
-    (source (origin
-	      (method url-fetch)
-	      (uri (pypi-uri "imgtool" version))
-	      (sha256
-	       (base32
-		"0hsa2gly17crxxyn1dy55yyhcqkbw5w7993yl3zvasghdfyzd9vz"))))
-    (build-system python-build-system)
-    (propagated-inputs (list python-cbor2 python-click python-cryptography
-			     python-intelhex))
-    (home-page "http://github.com/mcu-tools/mcuboot")
-    (synopsis "MCUboot's image signing and key management")
-    (description "MCUboot's image signing and key management")
-    (license license:apsl2)))
+   (name "imgtool")
+   (version "1.9.0")
+   (source (origin
+            (method url-fetch)
+            (uri (pypi-uri "imgtool" version))
+            (sha256
+             (base32
+              "0hsa2gly17crxxyn1dy55yyhcqkbw5w7993yl3zvasghdfyzd9vz"))))
+   (build-system python-build-system)
+   (propagated-inputs (list python-cbor2 python-click python-cryptography
+                            python-intelhex))
+   (home-page "http://github.com/mcu-tools/mcuboot")
+   (synopsis "MCUboot's image signing and key management")
+   (description "MCUboot's image signing and key management")
+   (license license:apsl2)))
