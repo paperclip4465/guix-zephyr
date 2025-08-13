@@ -362,7 +362,7 @@ language is C.")
 (define-public gdb-arm-zephyr-eabi
   ;; XXX: Does not work... I do not know why.
   (package
-    (inherit gdb-12)
+    (inherit gdb/pinned)
     (name "gdb-arm-zephyr-eabi")
     (version "12.1")
     (source
@@ -373,10 +373,10 @@ language is C.")
 	     (file-name (git-file-name name version))
 	     (sha256 (base32 "082lh9p3jcqnmk31yr7zmd1yrpp4z49xljg06rrfipk8x0z2sv23"))))
     (native-inputs
-     (modify-inputs (package-native-inputs gdb-12)
+     (modify-inputs (package-native-inputs gdb/pinned)
        (append bison flex)))
     (arguments
-     (substitute-keyword-arguments (package-arguments gdb-12)
+     (substitute-keyword-arguments (package-arguments gdb/pinned)
        ((#:configure-flags flags)
 	`(cons* "--target=arm-zephyr-eabi"
 		"--enable-multilib"
