@@ -56,13 +56,11 @@
 		   "--disable-sim"
 		   #$flags))))
       (native-inputs
-       (append
-	(list texinfo
-	      bison
-	      flex
-	      gmp
-	      dejagnu)
-	(package-native-inputs xbinutils)))
+       (list texinfo
+              bison
+              flex
+              gmp
+              dejagnu))
       (home-page "https://zephyrproject.org")
       (synopsis "binutils for zephyr RTOS"))))
 
