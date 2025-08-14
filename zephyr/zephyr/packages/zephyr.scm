@@ -32,6 +32,7 @@
   #:use-module (gnu packages compression)
   #:use-module (gnu packages embedded)
   #:use-module (gnu packages bootloaders)
+  #:use-module ((zephyr packages) #:prefix zephyr:)
   #:use-module (zephyr packages python-xyz))
 
 (define-public arm-zephyr-eabi-binutils
