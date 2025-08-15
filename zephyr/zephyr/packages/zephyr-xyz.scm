@@ -502,21 +502,21 @@ assembly language.")
       (license license:zlib))))
 
 (define-public zephyr-hal-st
-  (let ((commit "52a522ca4a8a9ec1e9bb5bb514e1ab6f102863fe"))
+  (let ((commit "fb8e79d1a261fd02aadff7c142729f1954163cf3"))
     (package
       (name "zephyr-hal-st")
       (version (git-version "1.0.2" "3.5" commit))
       (home-page "https://www.st.com")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_st")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "12xpg8wvfr42kwnyiasip2axk923w6lpzfmrbgzl3zl4lc1wqa8c"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_st")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0x3sw8glgqidch3aijclzbalxc8767illkb24zhrmrls9ql7v1ij"))))
       (build-system zephyr-module-build-system)
       (arguments '(#:workspace-path "/modules/hal/st"))
       (synopsis "Official libraries provided by STMicroelectronics")
