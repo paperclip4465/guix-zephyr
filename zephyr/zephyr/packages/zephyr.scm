@@ -359,6 +359,17 @@ language is C.")
    gcc-arm-zephyr-eabi-12
    arm-zephyr-eabi-newlib-nano))
 
+(define-public zephyr-gnuarmemb-nano-toolchain-12
+  (let ((xgcc (make-arm-none-eabi-nano-toolchain-12.3.rel1)))
+    (package
+      (inherit xgcc)
+      (name "zephyr-gnuarmemb-nano-toolchain")
+      (native-search-paths
+       (list
+        (search-path-specification
+         (variable "GNUARMEMB_TOOLCHAIN_PATH")
+         (files '(""))))))))
+
 (define-public gdb-arm-zephyr-eabi
   ;; XXX: Does not work... I do not know why.
   (package
