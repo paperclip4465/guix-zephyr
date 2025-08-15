@@ -70,10 +70,11 @@ pointing to a ZMK configuration repository which contains a \"config/\"
 directory as described here: https://zmk.dev/docs/customization"
   (let ((commit "aa3e5dd70fdd1b364fa9ad26f14425be613d180c"))
     (package
-      (name (string-append "zmk-" (prettify-name board)
-                           (if shield
-                               (string-append "-" (prettify-name shield))
-                               "")))
+      (name (prettify-name
+             (string-append "zmk-" board
+                            (if shield
+                                (string-append "-" shield)
+                                ""))))
       (version (git-version "0.3.0" "" commit))
       (source (origin (method git-fetch)
                       (uri (git-reference
