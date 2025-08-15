@@ -20,14 +20,14 @@
       (home-page "http://www.can-cia.org")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/canopennode")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1vqrx1zi2wbvnwza4z39nrd33j9dxpp9j9rnn12r1gdwxfjazbw0"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/canopennode")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1vqrx1zi2wbvnwza4z39nrd33j9dxpp9j9rnn12r1gdwxfjazbw0"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/canopennode"))
@@ -45,14 +45,14 @@ built on top of CAN.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/chre")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "00jnv58slzgp4srmsamd7x34yf0hj1c6agmws4csv7w28013bwfm"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/chre")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "00jnv58slzgp4srmsamd7x34yf0hj1c6agmws4csv7w28013bwfm"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/chre"))
@@ -104,14 +104,14 @@ Software Interface Standard.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/edtt")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "10cpksv0imsd0jbyr2pag63agvfx9dg4028x3cxpvfvscizz4dpx"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/edtt")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "10cpksv0imsd0jbyr2pag63agvfx9dg4028x3cxpvfvscizz4dpx"))))
       (build-system zephyr-module-build-system)
       (arguments '(#:workspace-path "tools/edtt"))
       (synopsis "The EDTT (Embedded Device Test Tool) is a collection of python scripts")
@@ -131,14 +131,14 @@ The EDTT (Embedded Device Test Tool) is a collection of python scripts, which in
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/fatfs")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "04c33x1am766sdszmsmxd2rii6snyld68ca17qhg3ml2xiqy1z31"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/fatfs")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "04c33x1am766sdszmsmxd2rii6snyld68ca17qhg3ml2xiqy1z31"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/fs/fatfs"))
@@ -157,14 +157,14 @@ with Zephyr flash memory management.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/fff")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1wwrsicibk5nrzj7arxd4a22qr596vnc1ygp9zi409ygqvmzayzy"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/fff")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1wwrsicibk5nrzj7arxd4a22qr596vnc1ygp9zi409ygqvmzayzy"))))
       (build-system zephyr-module-build-system)
       (arguments '(#:workspace-path "/modules/lib/fff"))
       (synopsis "Micro-framework for creating fake C functions for tests")
@@ -181,14 +181,14 @@ hand-writing fake functions for testing.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_altera")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "05f5a1sk8mp8vhbdsj31833n10kyd91f93hgk2zr62xc0kfbwq0z"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_altera")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "05f5a1sk8mp8vhbdsj31833n10kyd91f93hgk2zr62xc0kfbwq0z"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/altera"))
@@ -209,14 +209,14 @@ and provides the high level API's for the shim drivers.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_atmel")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "10sqdx1sasf3nnpp35jm4sj8i91izm2lb4kymy238jbafp1iggqg"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_atmel")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "10sqdx1sasf3nnpp35jm4sj8i91izm2lb4kymy238jbafp1iggqg"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/atmel"))
@@ -232,14 +232,14 @@ and provides the high level API's for the shim drivers.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_espressif")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1c940bp4d07igi68y3fa61f0rchnhzk2mqqhmyvbj8ml31g85h35"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_espressif")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1c940bp4d07igi68y3fa61f0rchnhzk2mqqhmyvbj8ml31g85h35"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/espressif"))
@@ -256,14 +256,14 @@ SoCs supported on Windows, Linux and macOS.")
       (home-page "https://github.com/zephyrproject-rtos/hal_gigadevice")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_gigadevice")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0br7j45w6s8zc3050nrgd6mvq08gdn9z8svmhbn1c26ipv62npzd"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_gigadevice")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0br7j45w6s8zc3050nrgd6mvq08gdn9z8svmhbn1c26ipv62npzd"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/gigadevice"))
@@ -282,14 +282,14 @@ for GigaDevice MCUs")
       (home-page "https://github.com/zephyrproject-rtos/hal_infineon")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_infineon")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1wgvdkib605j0hnyrlnwikb6zri0v3l8pfxdiazbaz07rqnc11vb"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_infineon")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1wgvdkib605j0hnyrlnwikb6zri0v3l8pfxdiazbaz07rqnc11vb"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/infineon"))
@@ -298,7 +298,7 @@ for GigaDevice MCUs")
 HAL, etc), which are used in implementation of Zephyr drivers for
 Infineon devices.")
       (license (license:non-copyleft
-		(file-append source "/License.txt"))))))
+                (file-append source "/License.txt"))))))
 
 (define-public zephyr-hal-microchip
   (let ((commit "5d079f1683a00b801373bbbbf5d181d4e33b30d5"))
@@ -308,22 +308,22 @@ Infineon devices.")
       (home-page  "https://github.com/zephyrproject-rtos/hal_microchip")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_microchip")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "11basljy0fsgcp3l7zvxklw6zqkmahm97pi156ndadrhr8g4v5q8"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_microchip")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "11basljy0fsgcp3l7zvxklw6zqkmahm97pi156ndadrhr8g4v5q8"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/microchip"))
       (synopsis "Hardware Abstraction Layer for Microchip SoC's")
       (description "Hardware Abstraction Layer for Microchip SoC's")
       (license (list license:apsl2
-		     (license:non-copyleft
-		      "https://github.com/polarfire-soc/platform/blob/main/LICENSE.md"))))))
+                     (license:non-copyleft
+                      "https://github.com/polarfire-soc/platform/blob/main/LICENSE.md"))))))
 
 (define-public zephyr-hal-nordic
   (let ((commit "884c4d61746bc35fbd379c169fc87ddb56c6461d"))
@@ -364,15 +364,15 @@ startup and initialization files for them.")
       (home-page "https://github.com/zephyrproject-rtos/hal_nuvoton")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_nuvoton")
-	       (commit
-		"b4d31f33238713a568e23618845702fadd67386f")))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0942ainpvf64878vkwh9sx4bgwzmf98d40wqa125qmczlbb0d7my"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_nuvoton")
+               (commit
+                "b4d31f33238713a568e23618845702fadd67386f")))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0942ainpvf64878vkwh9sx4bgwzmf98d40wqa125qmczlbb0d7my"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/nuvoton"))
@@ -383,19 +383,19 @@ startup and initialization files for them.")
 
 (define-public zephyr-hal-nxp
   (let ((module-path "/modules/hal/nxp")
-	(commit "708c95825b0d5279620935a1356299fff5dfbc6e"))
+        (commit "708c95825b0d5279620935a1356299fff5dfbc6e"))
     (package
       (name "zephyr-hal-nxp")
       (version (git-version "0.0" "3.5" commit))
       (home-page "https://nxp.com")
       (source (origin
-		(method git-fetch)
-		(uri (git-reference
-		      (url "https://github.com/zephyrproject-rtos/hal_nxp")
-		      (commit commit)))
-		(file-name (git-file-name name version))
-		(sha256
-		 (base32 "1yb7apbg9hpqz0lvca0r8wzr4zg3fdnzzsahkkx69d64j0vkwkcz"))))
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/zephyrproject-rtos/hal_nxp")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32 "1yb7apbg9hpqz0lvca0r8wzr4zg3fdnzzsahkkx69d64j0vkwkcz"))))
       (build-system zephyr-module-build-system)
       (arguments `(#:workspace-path ,module-path))
       (synopsis "Zephyr module for NXP Hardware Abstraction Layer")
@@ -410,14 +410,14 @@ startup and initialization files for them.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_openisa")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1kvb6pc28klw5pplfp3hbrznvi70gvzq0qjiz6ji256qbflj0437"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_openisa")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1kvb6pc28klw5pplfp3hbrznvi70gvzq0qjiz6ji256qbflj0437"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/openisa"))
@@ -434,14 +434,14 @@ SDK that contains only the files needed for Zephyr.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_quicklogic")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0hk1x72kibaw3xkspy9822vh28ax3bk11b80qn8l4dwrm0wx34sy"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_quicklogic")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0hk1x72kibaw3xkspy9822vh28ax3bk11b80qn8l4dwrm0wx34sy"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/quicklogic"))
@@ -460,14 +460,14 @@ It is authored by the QuickLogic Corporation.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_rpi_pico")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "19wbqk27pfm37k1yj7wqb5cp5cx2aj6vp516n4f1pcp34mn9wbqg"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_rpi_pico")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "19wbqk27pfm37k1yj7wqb5cp5cx2aj6vp516n4f1pcp34mn9wbqg"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/rpi_pico"))
@@ -486,14 +486,14 @@ assembly language.")
       (home-page "https://www.silabs.com")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_silabs")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "00cwkcg3v137md5hda9yv4s42isfrqnxd097i4kg6jj5sxm8f2bh"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_silabs")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "00cwkcg3v137md5hda9yv4s42isfrqnxd097i4kg6jj5sxm8f2bh"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/silabs"))
@@ -557,14 +557,14 @@ CMSIS headers files, one for each SoC in STM32 series.")
       (home-page "https://github.com/zephyrproject-rtos/hal_telink")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_telink")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1m5y6bhnhc6nnfd2pgxxhf30ny10vhiff4qaqililvg99b3wr0ca"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_telink")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1m5y6bhnhc6nnfd2pgxxhf30ny10vhiff4qaqililvg99b3wr0ca"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/telink"))
@@ -580,14 +580,14 @@ CMSIS headers files, one for each SoC in STM32 series.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_ti")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "12a2waxajh10nkxyyshy7h2iqp72gw9vhnra8yaimdadsijqaxnq"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_ti")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "12a2waxajh10nkxyyshy7h2iqp72gw9vhnra8yaimdadsijqaxnq"))))
       (build-system zephyr-module-build-system)
       (arguments '(#:workspace-path "/modules/hal/ti"))
       (synopsis "Hardware abstraction for Texas Instruments devices")
@@ -602,14 +602,14 @@ CMSIS headers files, one for each SoC in STM32 series.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_xtensa")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0pjgmj1dmmcga15cwrqlz4iwscl0wddpw12v050xk6f4idql1h72"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_xtensa")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0pjgmj1dmmcga15cwrqlz4iwscl0wddpw12v050xk6f4idql1h72"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/xtensa"))
@@ -625,14 +625,14 @@ CMSIS headers files, one for each SoC in STM32 series.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/libmetal")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1r0k3yxa50x0627fr61k6ahmfwyjg9zqiagfjv62a8jpwc134mw4"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/libmetal")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1r0k3yxa50x0627fr61k6ahmfwyjg9zqiagfjv62a8jpwc134mw4"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/libmetal"))
@@ -654,14 +654,14 @@ following operating environments:
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/liblc3codec")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0sapdsciazs92mdnik3j6g4y0v5x8rm6ga63szh436dw9jdd0dqi"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/liblc3codec")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0sapdsciazs92mdnik3j6g4y0v5x8rm6ga63szh436dw9jdd0dqi"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/liblc3codec"))
@@ -677,14 +677,14 @@ following operating environments:
       (home-page "https://github.com/zephyrproject-rtos/littlefs")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/littlefs")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0an9ls0mbnxhjdnwa4mr150qxg7qg26jbzadvibhyflkqwibhlqc"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/littlefs")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0an9ls0mbnxhjdnwa4mr150qxg7qg26jbzadvibhyflkqwibhlqc"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/fs/littlefs"))
@@ -700,14 +700,14 @@ following operating environments:
       (home-page "https://github.com/zephyrproject-rtos/loramac-node")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/loramac-node")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0qrbjf09dp7cwazw5wl2z0zk1bn5yylrczpfv7hxzfc4mxgcm1ww"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/loramac-node")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0qrbjf09dp7cwazw5wl2z0zk1bn5yylrczpfv7hxzfc4mxgcm1ww"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/loramac-node"))
@@ -750,14 +750,14 @@ effects and a low memory footprint.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/lz4")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1kqs7gxg17gvws01rir8p6gmzp54y12s1898lflhsb418122v8nf"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/lz4")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1kqs7gxg17gvws01rir8p6gmzp54y12s1898lflhsb418122v8nf"))))
       (build-system zephyr-module-build-system)
       (arguments '(#:workspace-path "/modules/lib/lz4"))
       (synopsis "Extremely fast lossless compression algorithm")
@@ -767,8 +767,8 @@ CPU. It features an extremely fast decoder, with speed in multiple
 GB/s per core, typically reaching RAM speed limits on multi-core
 systems.")
       (license (list license:bsd-2 ;file under /lib
-		     license:gpl2 ;everything else
-		     )))))
+                     license:gpl2 ;everything else
+                     )))))
 
 (define-public zephyr-mbedtls
   (let ((commit "7fed49c9b9f983ad6416986661ef637459723bcb"))
@@ -778,14 +778,14 @@ systems.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/mbedtls")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "084m54xgqqqfixj7h9zigh98l06c2g5ybwbs6y7yji22x0v5dx7f"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/mbedtls")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "084m54xgqqqfixj7h9zigh98l06c2g5ybwbs6y7yji22x0v5dx7f"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/crypto/mbedtls"))
@@ -795,31 +795,31 @@ cryptographic primitives, X.509 certificate manipulation and the
 SSL/TLS and DTLS protocols. Its small code footprint makes it suitable
 for embedded systems.")
       (license (list license:apsl2
-		     license:gpl2+)))))
+                     license:gpl2+)))))
 
 (define-public zephyr-mcuboot
   (let ((module-path "/bootloader/mcuboot")
-	(commit "e58ea98aec6e5539c5f872a98059e461d0155bbb"))
+        (commit "e58ea98aec6e5539c5f872a98059e461d0155bbb"))
     (package
       (name "zephyr-mcuboot")
       (version (git-version "1.10.0" "3.5.0" commit))
       (home-page "https://mcuboot.com")
       (source (origin
-		(method git-fetch)
-		(uri (git-reference
-		      (url "https://github.com/zephyrproject-rtos/mcuboot")
-		      (commit commit)))
-		(file-name (git-file-name name version))
-		(sha256
-		 (base32 "0mmv4wb3w9b66sljc3scckqb7bv54w95rd7dhqq8qmy4420n5vnd"))))
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/zephyrproject-rtos/mcuboot")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32 "0mmv4wb3w9b66sljc3scckqb7bv54w95rd7dhqq8qmy4420n5vnd"))))
       (build-system zephyr-module-build-system)
       (arguments `(#:workspace-path ,module-path))
       (propagated-inputs
        (list zcbor))
       (native-search-paths
        (list (search-path-specification
-	      (variable "ZEPHYR_MODULE_PATH")
-	      (files '("zephyr-workspace/bootloader")))))
+              (variable "ZEPHYR_MODULE_PATH")
+              (files '("zephyr-workspace/bootloader")))))
       (synopsis "Secure 32 bit bootloader built for ZephyrRTOS")
       (description "MCUboot is a secure bootloader for 32-bit
 microcontrollers. It defines a common infrastructure for the
@@ -835,14 +835,14 @@ provides a secure bootloader that enables easy software upgrade.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/mipi-sys-t")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1phg5i52k691my50n4821rdvlxyfr4dhs7146ayp0lf7nfw5asz4"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/mipi-sys-t")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1phg5i52k691my50n4821rdvlxyfr4dhs7146ayp0lf7nfw5asz4"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/debug/mipi-sys-t"))
@@ -865,14 +865,14 @@ MIPI SyS-T API which generates the MIPI SyS-T data protocol.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/nanopb")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0kmzh65hyhnl88w9x0rcdypj4nl1brbxrnzhy3flgxmhr564y05s"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/nanopb")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0kmzh65hyhnl88w9x0rcdypj4nl1brbxrnzhy3flgxmhr564y05s"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/nanopb"))
@@ -890,14 +890,14 @@ microcontrollers, but fits any memory restricted system.")
       (home-page "https://github.com/zephyrproject-rtos/net-tools")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/net-tools")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0m6ml684w8l5jjyzklf88crrcvniz4vw4g65py845hs4gk0qdiaw"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/net-tools")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0m6ml684w8l5jjyzklf88crrcvniz4vw4g65py845hs4gk0qdiaw"))))
       (build-system zephyr-module-build-system)
       (arguments '(#:workspace-path "tools/net-tools"))
       (synopsis "Zephyr network tools for testing with Qemu")
@@ -917,18 +917,18 @@ Linux.")
       (home-page "https://github.com/zephyrproject-rtos/nrf_hw_models")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/nrf_hw_models")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "185dq4x22mci7c85yr5d0vs8b5jf0c6f9y1z1s2x4x0hxdi1l2p1"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/nrf_hw_models")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "185dq4x22mci7c85yr5d0vs8b5jf0c6f9y1z1s2x4x0hxdi1l2p1"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path
-	 "/modules/bsim_hw_models/nrf_hw_models"))
+         "/modules/bsim_hw_models/nrf_hw_models"))
       (synopsis "Models of the nRF52xxx HW peripherals")
       (description "This repo contains models of the nRF52 HW
 peripherals and some replacement nrfx HAL functions. When used in
@@ -947,14 +947,14 @@ nRF52833.")
       (home-page "https://github.com/OpenAMP/open-amp")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/open-amp")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "00lynjr3vj8a3gj3vh557gjwp7v7kzj7py0vxwvq8y349kh1ga50"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/open-amp")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "00lynjr3vj8a3gj3vh557gjwp7v7kzj7py0vxwvq8y349kh1ga50"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/open-amp"))
@@ -976,7 +976,7 @@ enable development of software applications for Asymmetric Multiprocessing
   to handle printf, scanf, open, close, read, write calls from Bare metal
   based remote contexts.")
       (license (list license:bsd-2
-		     license:bsd-3)))))
+                     license:bsd-3)))))
 
 (define-public zephyr-openthread
   (let ((commit "b21e99b4b3d823f71c902b9174ff62b964c124f0"))
@@ -986,14 +986,14 @@ enable development of software applications for Asymmetric Multiprocessing
       (home-page "https://openthread.io")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/openthread")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1kmmzvip0myjjrxbbassx5f2lj6z9z013l8mxb9w57cqhk2b6089"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/openthread")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1kmmzvip0myjjrxbbassx5f2lj6z9z013l8mxb9w57cqhk2b6089"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/openthread"))
@@ -1040,14 +1040,14 @@ was formed by blending code from Newlib and AVR Libc.")
       (home-page "https://github.com/zephyrproject-rtos/segger")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/segger")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0a1rk0b2l1n2zkhlp1ia4cy2mijiaynk6qirw1gddnryj4qqr0nq"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/segger")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0a1rk0b2l1n2zkhlp1ia4cy2mijiaynk6qirw1gddnryj4qqr0nq"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/debug/segger"))
@@ -1063,14 +1063,14 @@ was formed by blending code from Newlib and AVR Libc.")
       (home-page "https://thesofproject.github.io/latest/index.html")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/sof")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "18ndv22wg2ikpm63c89vgq1j4azgz3jrim4drxa4z8gw2i4fschq"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/sof")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "18ndv22wg2ikpm63c89vgq1j4azgz3jrim4drxa4z8gw2i4fschq"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/audio/sof"))
@@ -1089,14 +1089,14 @@ as a community project.")
       (home-page "https://www.tensorflow.org")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/tflite-micro")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "1przq51rrhl032n831b2bl35f7kw22ypi9di2wxpfww5q4b6dbh1"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/tflite-micro")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1przq51rrhl032n831b2bl35f7kw22ypi9di2wxpfww5q4b6dbh1"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/tflite-micro"))
@@ -1114,14 +1114,14 @@ microcontrollers and other devices with limited memory.")
       (home-page "https://intel.github.io/tinycbor/current")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/tinycbor")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0yqmbiqx4www3rfc1ym42j8gqwi1b8hkw27gjps25xz22zrh4a1p"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/tinycbor")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0yqmbiqx4www3rfc1ym42j8gqwi1b8hkw27gjps25xz22zrh4a1p"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/tinycbor"))
@@ -1137,14 +1137,14 @@ microcontrollers and other devices with limited memory.")
       (home-page "https://github.com/intel/tinycrypt")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/tinycrypt")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "19d2q9y23yzz9i383q3cldjl3k5mryx9762cab23zy3ijdnmj2z6"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/tinycrypt")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "19d2q9y23yzz9i383q3cldjl3k5mryx9762cab23zy3ijdnmj2z6"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/crypto/tinycrypt"))
@@ -1155,7 +1155,7 @@ constrained devices of a minimal set of standard cryptography
 primitives")
       (license
        (license:non-copyleft
-	"https://github.com/intel/tinycrypt/blob/master/LICENSE")))))
+        "https://github.com/intel/tinycrypt/blob/master/LICENSE")))))
 
 (define-public zephyr-TraceRecorderSource
   (let ((commit "9893bf1cf649a2c4ee2e27293f887994f3d0da5b"))
@@ -1165,15 +1165,15 @@ primitives")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/TraceRecorderSource")
-	       (commit commit)))
-	 (file-name
-	  (git-file-name name version))
-	 (sha256
-	  (base32
-	   "00lghqq3n7qln6kq2ikwgswap62z81fqw0k28j975nnc1z932flg"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/TraceRecorderSource")
+               (commit commit)))
+         (file-name
+          (git-file-name name version))
+         (sha256
+          (base32
+           "00lghqq3n7qln6kq2ikwgswap62z81fqw0k28j975nnc1z932flg"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/debug/TraceRecorder"))
@@ -1189,18 +1189,18 @@ primitives")
       (home-page "https://github.com/zephyrproject-rtos/trusted-firmware-m")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/trusted-firmware-m")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "173l0llv1ywvcx654gfgq6ysw228j06lfxyiny0si595qwyn2mmq"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/trusted-firmware-m")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "173l0llv1ywvcx654gfgq6ysw228j06lfxyiny0si595qwyn2mmq"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path
-	 "/modules/tee/tf-m/trusted-firmware-m"))
+         "/modules/tee/tf-m/trusted-firmware-m"))
       (synopsis  "The Trusted Firmware-M software implementation
 contained in this project is designed to be a reference implementation
 of the Platform Security Architecture (PSA) for ARMv7-M and Armv8-M.")
@@ -1221,14 +1221,14 @@ Certified." )
       (home-page "https://github.com/zephyrproject-rtos/tf-m-tests")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/tf-m-tests")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0cc4029i9qfzq4vply9l2yjigaf9rq1zc6a44b8dc779kx31qx36"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/tf-m-tests")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0cc4029i9qfzq4vply9l2yjigaf9rq1zc6a44b8dc779kx31qx36"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/tee/tf-m/tf-m-tests"))
@@ -1247,18 +1247,18 @@ core and various secure partitions.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/psa-arch-tests")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "015qan6qfqyfc1lwpqb29zk1wxx02b6ng5wc1nfpfvknvhiwifay"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/psa-arch-tests")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "015qan6qfqyfc1lwpqb29zk1wxx02b6ng5wc1nfpfvknvhiwifay"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path
-	 "/modules/tee/tf-m/psa-arch-tests"))
+         "/modules/tee/tf-m/psa-arch-tests"))
       (synopsis "Tests for verifying implementations of TBSA-v8M and the PSA Developer APIs")
       (description "This test suite is one of a set of resources
 provided by Arm that can help organizations develop products that meet
@@ -1276,14 +1276,14 @@ more secure products.")
       (home-page "https://github.com/zephyrproject-rtos/zcbor")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/zcbor")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "03xz79pi210kny55ks9cyr8i9m68f7kla3nv5zk2afg59ms0nwdc"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/zcbor")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "03xz79pi210kny55ks9cyr8i9m68f7kla3nv5zk2afg59ms0nwdc"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/zcbor"))
@@ -1304,14 +1304,14 @@ standalone library which is tailored for use in microcontrollers.")
       (home-page "")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/zscilib")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "03rxpajcxs0rb5inlzk9l278nr4qrhs2clkmgz1raz6rcdcsmnm2"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/zscilib")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "03rxpajcxs0rb5inlzk9l278nr4qrhs2clkmgz1raz6rcdcsmnm2"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/zscilib"))
@@ -1332,10 +1332,10 @@ This version of zscilib has been developed and tested against Zephyr
       (license license:apsl2))))
 
 (define* (make-mcuboot board key #:key
-		       (mcuboot zephyr-mcuboot)
-		       (zephyr-base zephyr-3.5)
-		       (extra-zephyr-modules '())
-		       (extra-configure-flags '()))
+                       (mcuboot zephyr-mcuboot)
+                       (zephyr-base zephyr-3.5)
+                       (extra-zephyr-modules '())
+                       (extra-configure-flags '()))
   "Create a variant of MCUBOOT configured for BOARD and KEY.
 KEY is the PEM signing key that will be expected to sign application
 binaries. EXTRA-CONFIGURE-FLAGS can be given as a string or a list of strings."
@@ -1350,20 +1350,20 @@ binaries. EXTRA-CONFIGURE-FLAGS can be given as a string or a list of strings."
     (outputs '("out" "debug"))
     (arguments
      `(#:phases (modify-phases %standard-phases
-		  (add-before 'configure 'cd-to-source
-		    (lambda* _
-		      (chdir "boot/zephyr")
-		      #t)))
+                  (add-before 'configure 'cd-to-source
+                    (lambda* _
+                      (chdir "boot/zephyr")
+                      #t)))
        #:bin-name "mcuboot"
        #:board ,board
        #:zephyr ,zephyr-base
        #:configure-flags
        (append (list (format #f "-DCONFIG_BOOT_SIGNATURE_KEY_FILE=~s"
-			     (assoc-ref %build-inputs "signing-key")))
-	       ',(cond
-		  ((string? extra-configure-flags) `(list ,extra-configure-flags))
-		  ((pair? extra-configure-flags) extra-configure-flags)
-		  (else (error "Bad extra configure flags for mcuboot ~a."
-			       extra-configure-flags))))))
+                             (assoc-ref %build-inputs "signing-key")))
+               ',(cond
+                  ((string? extra-configure-flags) `(list ,extra-configure-flags))
+                  ((pair? extra-configure-flags) extra-configure-flags)
+                  (else (error "Bad extra configure flags for mcuboot ~a."
+                               extra-configure-flags))))))
     (description (format #f "~a~&This bootloader has been configured for ~a."
-			 (package-description mcuboot) board))))
+                         (package-description mcuboot) board))))
