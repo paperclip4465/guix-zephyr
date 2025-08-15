@@ -326,21 +326,21 @@ Infineon devices.")
 		      "https://github.com/polarfire-soc/platform/blob/main/LICENSE.md"))))))
 
 (define-public zephyr-hal-nordic
-  (let ((commit "2e1c828cf4efb71679aeaec94128708a5353e031"))
+  (let ((commit "884c4d61746bc35fbd379c169fc87ddb56c6461d"))
     (package
       (name "zephyr-hal-nordic")
       (version (git-version "3.0.0" "3.5" commit))
       (home-page "https://github.com/NordicSemiconductor/nrfx")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_nordic")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "14ahxbz92dyqjv7pgsjsln2nrv4092645l25i2ix6gs2dqqgrwfi"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_nordic")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1m17n858c03krmc45v13r9c4b73lmx8dag1sch4vy4szs07c5a1g"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/nordic"))
