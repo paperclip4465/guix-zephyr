@@ -1,3 +1,21 @@
+;;; Guix Zephyr --- Functional package management for ZephyrRTOS
+;;; Copyright © 2025 Mitchell Schmeisser <mitchellschmeisser@librem.one>
+;;;
+;;; This file is NOT part of GNU Guix.
+;;;
+;;; GNU Guix is free software; you can redistribute it and/or modify it
+;;; under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 3 of the License, or (at
+;;; your option) any later version.
+;;;
+;;; GNU Guix is distributed in the hope that it will be useful, but
+;;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
+
 (define-module (zephyr packages zmk)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix git-download)
@@ -169,3 +187,5 @@ Configured for board/shield: ~a/~a." board shield))
                  #:shield "kyria_right"
                  #:extra-modules (list zephyr-hal-nordic
                                        zephyr-tinycrypt)))
+
+;;; zmk.scm ends here
