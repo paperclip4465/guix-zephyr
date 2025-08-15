@@ -524,21 +524,21 @@ assembly language.")
       (license license:bsd-3))))
 
 (define-public zephyr-hal-stm32
-  (let ((commit "51b373cd3455b8c2b9babbf6ff41918116a442ac"))
+  (let ((commit "89ef0a3383edebf661073073bcdf6e2836fe90ee"))
     (package
       (name "zephyr-hal-stm32")
       (version (git-version "1.17" "3.5" commit))
       (home-page "https://www.st.com")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/hal_stm32")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "0hk6mvi12zyy8lclrkfhwwkxpz8vv5c9iksjrkc1izdgsprzrvfm"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/hal_stm32")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0z7q5xg1rn9c3anjvi2kl0hgik3y3r25svwf97w1cjhjx1rhqmpv"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/hal/stm32"))
