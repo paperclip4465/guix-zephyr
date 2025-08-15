@@ -718,21 +718,21 @@ SX1276/77/78/79, SX1261/2 and LR1110 radio drivers.")
       (license (license:non-copyleft (file-append source "/LICENSE"))))))
 
 (define-public zephyr-lvgl
-  (let ((commit "487bcde705b6f453d053f28dbba4dd9f353d1ccb"))
+  (let ((commit "8a6a2d1d29d17d1e4bdc94c243c146a39d635fdd"))
     (package
       (name "zephyr-lvgl")
       (version (git-version "8.3.7" "3.5" commit))
       (home-page "https://lvgl.io")
       (source
        (origin
-	 (method git-fetch)
-	 (uri (git-reference
-	       (url "https://github.com/zephyrproject-rtos/lvgl")
-	       (commit commit)))
-	 (file-name (git-file-name name version))
-	 (sha256
-	  (base32
-	   "07x3j6h2bg49vizg266z1ivv36hfq4r3pknzyc35vs7b82bzw64z"))))
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zephyrproject-rtos/lvgl")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0rsmlh358f4g2yidak916pxhkgckfrnck2a5hcsh9larsdnsnf24"))))
       (build-system zephyr-module-build-system)
       (arguments
        '(#:workspace-path "/modules/lib/gui/lvgl"))
