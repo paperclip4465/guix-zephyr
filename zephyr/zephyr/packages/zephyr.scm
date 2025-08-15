@@ -3,10 +3,10 @@
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix build utils)
-  #:use-module (guix build-system gnu)
-  #:use-module (guix build-system trivial)
   #:use-module (guix build-system copy)
+  #:use-module (guix build-system gnu)
   #:use-module (guix build-system python)
+  #:use-module (guix build-system trivial)
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module ((guix licenses) :prefix license:)
@@ -58,10 +58,10 @@
                    #$flags))))
       (native-inputs
        (list texinfo
-              bison
-              flex
-              gmp
-              dejagnu))
+             bison
+             flex
+             gmp
+             dejagnu))
       (home-page "https://zephyrproject.org")
       (synopsis "binutils for zephyr RTOS"))))
 
