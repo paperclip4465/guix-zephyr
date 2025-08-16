@@ -104,13 +104,9 @@ directory as described here: https://zmk.dev/docs/customization"
            (add-after 'unpack 'cd-to-app
              (lambda _
                (chdir "app")))
-           (add-before 'install 'rename-outputs
+           (add-before 'install 'cd-to-build
              (lambda _
-               (chdir "../build")
-               (map (lambda (ext)
-                      (copy-file (string-append "zephyr/zmk." ext)
-                                 (string-append "zephyr/zephyr." ext)))
-                    '("map" "bin" "elf")))))))
+               (chdir "../build"))))))
       (native-inputs
        (append (list zephyr-cmsis
                      zephyr-lvgl

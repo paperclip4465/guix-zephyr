@@ -16,8 +16,10 @@
   #:use-module (ice-9 format)
   #:use-module (ice-9 ftw)
   #:export (%zephyr-build-system-modules
-	    zephyr-build
-	    zephyr-build-system))
+            %default-output-extensions
+            %default-debug-extensions
+            zephyr-build
+            zephyr-build-system))
 
 ;; Commentary:
 ;;
@@ -33,45 +35,52 @@
 
 (define default-zephyr-base
   (module-ref (resolve-interface '(zephyr packages zephyr))
-	      'zephyr-3.5))
+              'zephyr-3.5))
 
 (define default-zephyr-sdk
   (module-ref (resolve-interface '(zephyr packages zephyr))
-	      'arm-zephyr-eabi-sdk))
+              'arm-zephyr-eabi-sdk))
 
 (define default-ninja
   (module-ref (resolve-interface '(gnu packages ninja))
-	      'ninja))
+              'ninja))
 
 (define default-cmake
   (module-ref (resolve-interface '(gnu packages cmake))
-	      'cmake-minimal))
+              'cmake-minimal))
 
+
+;; List of output file extensions to copy to output
+;; build/zephyr/zephyr.<ext> -> $output/firmware/base-name.ext
+(define %default-output-extensions '("elf" "bin" "uf2"))
+(define %default-debug-extensions '("map"))
 
 (define* (lower name
-		#:key source inputs native-inputs system target
-		(outputs '("out" "debug"))
-		(zephyr default-zephyr-base)
-		(sdk default-zephyr-sdk)
-		(ninja default-ninja)
-		(cmake default-cmake)
-		(bin-name "zephyr")
-		#:allow-other-keys
-		#:rest arguments)
+                #:key source inputs native-inputs system target
+                (outputs '("out" "debug"))
+                (zephyr default-zephyr-base)
+                (sdk default-zephyr-sdk)
+                (ninja default-ninja)
+                (cmake default-cmake)
+                (bin-name "zephyr")
+                (output-extensions %default-output-extensions)
+                (debug-extensions %default-debug-extensions)
+                #:allow-other-keys
+                #:rest arguments)
   "Return a bag for NAME."
   (define private-keywords `(#:zephyr #:inputs #:native-inputs #:target
-			     #:sdk #:ninja #:cmake))
+                             #:sdk #:ninja #:cmake))
   (bag
     (name name)
     (system system)
     (target target)
     (build-inputs `(,@(if source `(("source" ,source)) '())
-		    ,@`(("cmake" ,cmake))
-		    ,@`(("zephyr-sdk" ,sdk))
-		    ,@`(("zephyr" ,zephyr))
-		    ,@`(("ninja" ,ninja))
-		    ,@native-inputs
-		    ,@(standard-packages)))
+                    ,@`(("cmake" ,cmake))
+                    ,@`(("zephyr-sdk" ,sdk))
+                    ,@`(("zephyr" ,zephyr))
+                    ,@`(("ninja" ,ninja))
+                    ,@native-inputs
+                    ,@(standard-packages)))
     ;; Inputs need to be available at build time
     ;; since everything is statically linked.
     (host-inputs inputs)
@@ -80,68 +89,72 @@
     (arguments (strip-keyword-arguments private-keywords arguments))))
 
 (define* (zephyr-build name inputs
-		       #:key guile source
-		       board
-		       bin-name
-		       (outputs '("out" "debug")) (configure-flags ''())
-		       (search-paths '())
-		       (make-flags ''())
-		       (out-of-source? #t)
-		       (tests? #f)
-		       (test-target "test")
-		       (parallel-build? #t) (parallel-tests? #t)
-		       (validate-runpath? #f)
-		       (patch-shebangs? #t)
-		       (phases '%standard-phases)
-		       (system (%current-system))
-		       (substitutable? #t)
-		       (imported-modules %zephyr-build-system-modules)
-		       (modules '((zephyr build zephyr-build-system)
-				  (guix build utils))))
+                       #:key guile source
+                       board
+                       bin-name
+                       (outputs '("out" "debug")) (configure-flags ''())
+                       (output-extensions %default-output-extensions)
+                       (debug-extensions %default-debug-extensions)
+                       (search-paths '())
+                       (make-flags ''())
+                       (out-of-source? #t)
+                       (tests? #f)
+                       (test-target "test")
+                       (parallel-build? #t) (parallel-tests? #t)
+                       (validate-runpath? #f)
+                       (patch-shebangs? #t)
+                       (phases '%standard-phases)
+                       (system (%current-system))
+                       (substitutable? #t)
+                       (imported-modules %zephyr-build-system-modules)
+                       (modules '((zephyr build zephyr-build-system)
+                                  (guix build utils))))
   "Build SOURCE using CMAKE, and with INPUTS. This assumes that SOURCE
 provides a 'CMakeLists.txt' file as its build system."
   (define build
     (let ((outputs (if (member "debug" outputs)
-		       outputs
-		       (cons* "debug" outputs))))
+                       outputs
+                       (cons* "debug" outputs))))
       (with-imported-modules imported-modules
-	#~(begin
-	    (use-modules #$@(sexp->gexp modules))
-	    #$(with-build-variables inputs outputs
-		#~(zephyr-build #:source #+source
-				#:name #$name
-				#:system #$system
-				#:outputs %outputs
-				#:inputs %build-inputs
-				#:board #$board
-				#:bin-name #$bin-name
-				#:search-paths '#$(sexp->gexp
-						   (map search-path-specification->sexp
-							search-paths))
-				#:phases #$(if (pair? phases)
-					       (sexp->gexp phases)
-					       phases)
-				#:configure-flags #$(if (pair? configure-flags)
-							(sexp->gexp configure-flags)
-							configure-flags)
-				#:make-flags #$make-flags
-				#:out-of-source? #$out-of-source?
-				#:tests? #$tests?
-				#:test-target #$test-target
-				#:parallel-build? #$parallel-build?
-				#:parallel-tests? #$parallel-tests?
-				#:validate-runpath? #$validate-runpath?
-				#:patch-shebangs? #$patch-shebangs?
-				#:strip-binaries? #f))))))
+        #~(begin
+            (use-modules #$@(sexp->gexp modules))
+            #$(with-build-variables inputs outputs
+                #~(zephyr-build #:source #+source
+                                #:name #$name
+                                #:system #$system
+                                #:outputs %outputs
+                                #:inputs %build-inputs
+                                #:output-extensions '#$output-extensions
+                                #:debug-extensions '#$debug-extensions
+                                #:board #$board
+                                #:bin-name #$bin-name
+                                #:search-paths '#$(sexp->gexp
+                                                   (map search-path-specification->sexp
+                                                        search-paths))
+                                #:phases #$(if (pair? phases)
+                                               (sexp->gexp phases)
+                                               phases)
+                                #:configure-flags #$(if (pair? configure-flags)
+                                                        (sexp->gexp configure-flags)
+                                                        configure-flags)
+                                #:make-flags #$make-flags
+                                #:out-of-source? #$out-of-source?
+                                #:tests? #$tests?
+                                #:test-target #$test-target
+                                #:parallel-build? #$parallel-build?
+                                #:parallel-tests? #$parallel-tests?
+                                #:validate-runpath? #$validate-runpath?
+                                #:patch-shebangs? #$patch-shebangs?
+                                #:strip-binaries? #f))))))
 
   (mlet %store-monad ((guile (package->derivation (or guile (default-guile))
-						  system #:graft? #f)))
+                                                  system #:graft? #f)))
     (gexp->derivation name build
-		      #:system system
-		      #:target #f
-		      #:graft? #f
-		      #:substitutable? substitutable?
-		      #:guile-for-build guile)))
+                      #:system system
+                      #:target #f
+                      #:graft? #f
+                      #:substitutable? substitutable?
+                      #:guile-for-build guile)))
 
 (define zephyr-build-system
   (build-system
