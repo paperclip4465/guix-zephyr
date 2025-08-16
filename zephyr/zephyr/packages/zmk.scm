@@ -104,9 +104,15 @@ directory as described here: https://zmk.dev/docs/customization"
            (add-after 'unpack 'cd-to-app
              (lambda _
                (chdir "app")))
-           (add-before 'install 'cd-to-build
+           (add-before 'install 'rename-outputs
              (lambda _
-               (chdir "../build"))))))
+               (chdir "../build")
+               (map (lambda (ext)
+                      (let ((orig (string-append "zephyr/zmk." ext)))
+                        (if (file-exists? orig)
+                            (copy-file orig (string-append "zephyr/zephyr." ext))
+                            (format #t "Skipping renaming ~a. File does not exist!\n" orig))))
+                    ',%default-output-extensions))))))
       (native-inputs
        (append (list zephyr-cmsis
                      zephyr-lvgl
