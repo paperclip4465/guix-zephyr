@@ -89,7 +89,8 @@ directory as described here: https://zmk.dev/docs/customization"
        `(#:configure-flags
          ,#~(append
              (list (string-append "-DBOARD=" #$board)
-                   "-DCONFIG_NEWLIB_LIBC=y")
+                   "-DCONFIG_NEWLIB_LIBC=y"
+                   "-DCONFIG_BUILD_OUTPUT_UF2=y")
              (if #$config
                  (list (string-append "-DZMK_CONFIG=" #$config "/config"))
                  '())
