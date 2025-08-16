@@ -113,7 +113,7 @@ directory as described here: https://zmk.dev/docs/customization"
                         (if (file-exists? orig)
                             (copy-file orig (string-append "zephyr/zephyr." ext))
                             (format #t "Skipping renaming ~a. File does not exist!\n" orig))))
-                    ',%default-output-extensions))))))
+                    ',(append %default-output-extensions %default-debug-extensions)))))))
       (native-inputs
        (append (list zephyr-cmsis
                      zephyr-lvgl
