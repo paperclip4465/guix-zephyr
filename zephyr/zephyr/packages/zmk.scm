@@ -99,7 +99,6 @@ directory as described here: https://zmk.dev/docs/customization"
              '#$extra-config-flags)
          #:bin-name ,name
          #:zephyr ,zephyr-zmk-3.5
-         #:output-extensions ("uf2")
          #:phases
          (modify-phases %standard-phases
            (add-after 'unpack 'cd-to-app
