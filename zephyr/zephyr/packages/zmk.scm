@@ -90,7 +90,8 @@ directory as described here: https://zmk.dev/docs/customization"
          ,#~(append
              (list (string-append "-DBOARD=" #$board)
                    "-DCONFIG_NEWLIB_LIBC=y"
-                   "-DCONFIG_BUILD_OUTPUT_UF2=y")
+                   "-DCONFIG_BUILD_OUTPUT_UF2=y"
+                   "-DCONFIG_KERNEL_BIN_NAME=\"zephyr\"")
              (if #$config
                  (list (string-append "-DZMK_CONFIG=" #$config "/config"))
                  '())
@@ -105,15 +106,9 @@ directory as described here: https://zmk.dev/docs/customization"
            (add-after 'unpack 'cd-to-app
              (lambda _
                (chdir "app")))
-           (add-before 'install 'rename-outputs
+           (add-before 'install 'cd-to-build
              (lambda _
-               (chdir "../build")
-               (map (lambda (ext)
-                      (let ((orig (string-append "zephyr/zmk." ext)))
-                        (if (file-exists? orig)
-                            (copy-file orig (string-append "zephyr/zephyr." ext))
-                            (format #t "Skipping renaming ~a. File does not exist!\n" orig))))
-                    ',(append %default-output-extensions %default-debug-extensions)))))))
+               (chdir "../build"))))))
       (native-inputs
        (append (list zephyr-cmsis
                      zephyr-lvgl
