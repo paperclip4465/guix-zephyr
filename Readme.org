@@ -37,7 +37,7 @@ Add the following to your ~channels.scm~
 * Usage
 
 This channel provides the ~zephyr-build-system~ and ~zephyr-module-build-system~.
-The ~zephyr-build-system~ contains a bootstrapped version of the [[https://github.com/zephyrproject-rtos/sdk-ng][zephyr sdk]].
+The ~zephyr-build-system~ contains a bootstrapped version of the [[https://github.com/zephyrproject-rtos/sdk-ng][Zephyr SDK]].
 Currently only ~arm-zephyr-eabi~ sans libstdc++ is supported. (please help!)
 
 ** Firmware
@@ -73,7 +73,7 @@ Firmware can be defined like so.
          #:zephyr ,zephyr-3.5))
       (inputs (list zephyr-cmsis zephyr-hal-nxp))
       (synopsis "Hello world example from Zephyr Project")
-      (description "Sample package for zephyr project")
+      (description "Sample package for Zephyr Project")
       (license license:apsl2)))
 #+END_SRC
 
@@ -84,8 +84,7 @@ board definitions, drivers, misc libraries, you name it. Anything that
 does not provide ~main~ is likely a module.
 
 #+BEGIN_SRC scheme
-  (use-modules (guix gexp)
-               (guix git-download)
+  (use-modules (guix git-download)
                ((guix licenses)
                 #:prefix license:)
                (guix packages)
@@ -110,7 +109,7 @@ does not provide ~main~ is likely a module.
         (arguments
          `(#:workspace-path ,module-path))
         (synopsis "Zephyr module for NXP Hardware Abstraction Layer")
-        (description "Provides sources for NXP HAL zephyr module")
+        (description "Provides sources for NXP HAL Zephyr module")
         (license license:bsd-3))))
 #+END_SRC
 
@@ -134,32 +133,28 @@ an application.
 
 *** MCUBoot the Module
 
-Why is MCUBoot a module? Because the application also needs to know
-about it so it can work with the images and mark them for upgrade in
-the first place.
-
 Applications which rely on MCUBoot should include ~zephyr-mcuboot~
 in their input list.
 
 *** MCUBoot the Bootloader
 
-MCUBoot is itself a zephyr application.
+MCUBoot is itself a Zephyr application.
 The procedure ~make-mcuboot~ returns a package which has been
 specialized for a given board.
 
 Below is an example bootloader which targets the =frdm_k64f=.
 #+BEGIN_SRC scheme
   (make-mcuboot "frdm_k64f"
-		;; Use special dev key instead of production
-		(local-file "ecdsap256-dev.pem")
-		#:extra-zephyr-modules (list zephyr-cmsis zephyr-hal-nxp)
-		#:zephyr-base zephyr-3.1
-		#:extra-configure-flags
-		'(;; k64 doesn't have fancy crypto hardware
-		  ;; so we cannot use RSA keys.
-		  "-DCONFIG_BOOT_SIGNATURE_TYPE_ECDSA_P256=y"
-		  "-DCONFIG_BOOT_SIGNATURE_TYPE_RSA=n"
-		  "-DCONFIG_BOOT_ECDSA_TINYCRYPT=y"))
+                  ;; Use special dev key instead of production
+                  (local-file "ecdsap256-dev.pem")
+                  #:extra-zephyr-modules (list zephyr-cmsis zephyr-hal-nxp)
+                  #:zephyr-base zephyr-3.1
+                  #:extra-configure-flags
+                  '(;; k64 doesn't have fancy crypto hardware
+                    ;; so we cannot use RSA keys.
+                    "-DCONFIG_BOOT_SIGNATURE_TYPE_ECDSA_P256=y"
+                    "-DCONFIG_BOOT_SIGNATURE_TYPE_RSA=n"
+                    "-DCONFIG_BOOT_ECDSA_TINYCRYPT=y"))
 #+END_SRC
 
 * Guest (Guile + West)
@@ -195,16 +190,17 @@ Guest can be installed with ~guix install guest~.
 ZMK for a particular board/shield/config.
 
 #+begin_src scheme
-  (use-modules (zephyr packages zmk))
+  (use-modules (zephyr packages zephyr-xyz)
+               (zephyr packages zmk))
 
   (define-public zmk-nice-nano-v2-kyria-right
     (zmk-for-board "nice_nano_v2"
-		   #:shield "kyria_right"
-		   #:config (origin ...) ;git repo containing config/ folder
-		   #:extra-modules (list zephyr-hal-nordic
-					 zephyr-tinycrypt)))
+                   #:shield "kyria_right"
+                   #:config (origin ...) ;git repo containing config/ folder
+                   #:extra-modules (list zephyr-hal-nordic
+                                         zephyr-tinycrypt)))
 #+end_src
 
 ~zmk-for-board~ returns a package name in the form
 =zmk-<BOARD>[-SHIELD]=.  The above package will place built firmware
-at =/gnu/store/.../firmware/zmk-nice-nano-v2-kyria-right.elf=.
+at =/gnu/store/.../firmware/zmk-nice-nano-v2-kyria-right.uf2=.
