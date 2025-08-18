@@ -1,9 +1,11 @@
 (define-module (zephyr build zephyr-build-system)
   #:use-module ((guix build cmake-build-system) #:prefix cmake:)
   #:use-module (guix build utils)
+  #:use-module (srfi srfi-26)
   #:use-module (zephyr build utils)
+
   #:export (%standard-phases
-	    zephyr-build))
+            zephyr-build))
 
 ;; Commentary:
 ;;
@@ -42,22 +44,17 @@
                   output-extensions
                   debug-extensions
                   #:allow-other-keys)
+  (define (zephyr-copy dest ext)
+    (let ((orig (string-append "zephyr/zephyr." ext)))
+      (if (file-exists? orig)
+          (copy-file orig (string-append dest "/" bin-name "." ext))
+          (format #t "Skipping ~a. File does not exist!\n" orig))))
+
   (let* ((out (string-append (assoc-ref outputs "out") "/firmware"))
          (dbg (string-append (assoc-ref outputs "debug") "/share/zephyr")))
-    (mkdir-p out)
-    (mkdir-p dbg)
-    (map (lambda (ext)
-           (let ((orig (string-append "zephyr/zephyr." ext)))
-             (if (file-exists? orig)
-                 (copy-file orig (string-append out "/" bin-name "." ext))
-                 (format #t "Skipping ~a. File does not exist!\n" orig))))
-         output-extensions)
-    (map (lambda (ext)
-           (let ((orig (string-append "zephyr/zephyr." ext)))
-             (if (file-exists? orig)
-                 (copy-file orig (string-append dbg "/" bin-name "." ext))
-                 (format #t "Skipping ~a. File does not exist!\n" orig))))
-         debug-extensions)
+    (map mkdir-p (list out dbg))
+    (map (cut zephyr-copy out <>) output-extensions)
+    (map (cut zephyr-copy dbg <>) debug-extensions)
     (copy-file "zephyr/.config" (string-append dbg "/config"))))
 
 (define %standard-phases
