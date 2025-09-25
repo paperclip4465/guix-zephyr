@@ -1367,3 +1367,21 @@ binaries. EXTRA-CONFIGURE-FLAGS can be given as a string or a list of strings."
                                extra-configure-flags))))))
     (description (format #f "~a~&This bootloader has been configured for ~a."
                          (package-description mcuboot) board))))
+
+(define-public zephyr-hello-world-frdm-k64f
+  (let ((zephyr zephyr-3.5))
+    (package
+     (name "zephyr-hello-world-frdm-k64f")
+     (version (package-version zephyr))
+     (home-page "https://zephyrproject.org")
+     (source
+      (file-append (package-source zephyr) "/samples/hello_world"))
+     (build-system zephyr-build-system)
+     (arguments
+      `(#:configure-flags '("-DBOARD=frdm_k64f")
+        #:bin-name "hello-world"
+        #:zephyr ,zephyr))
+     (inputs (list zephyr-cmsis zephyr-hal-nxp))
+     (synopsis "Hello world example from Zephyr Project")
+     (description "Sample package for Zephyr Project")
+     (license license:apsl2))))
