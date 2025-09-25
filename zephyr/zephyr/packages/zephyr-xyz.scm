@@ -383,7 +383,7 @@ startup and initialization files for them.")
 
 (define-public zephyr-hal-nxp
   (let ((module-path "/modules/hal/nxp")
-        (commit "708c95825b0d5279620935a1356299fff5dfbc6e"))
+        (commit "ad142f5612d927e29b1f9606e8edade871b8a526"))
     (package
       (name "zephyr-hal-nxp")
       (version (git-version "0.0" "3.5" commit))
@@ -395,7 +395,7 @@ startup and initialization files for them.")
                       (commit commit)))
                 (file-name (git-file-name name version))
                 (sha256
-                 (base32 "1yb7apbg9hpqz0lvca0r8wzr4zg3fdnzzsahkkx69d64j0vkwkcz"))))
+                 (base32 "17z0i4nnnmkgsd3ahwkydml97nn38dvnxki3nciaxp08q58dynfx"))))
       (build-system zephyr-module-build-system)
       (arguments `(#:workspace-path ,module-path))
       (synopsis "Zephyr module for NXP Hardware Abstraction Layer")
