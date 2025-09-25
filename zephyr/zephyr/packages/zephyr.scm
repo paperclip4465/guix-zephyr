@@ -462,7 +462,7 @@ as host tools like dtc, openocd, and qemu.")
                       (sha256
                        (base32 "0mca9ca8b2xjwjg0vl5858fd9l6h0m1jqbd3zr651zryf2897a80"))
                       (patches
-                       (search-patches "zephyr-3.1-linker-gen-abs-path.patch"))))
+                       (zephyr:search-patches "zephyr-3.1-linker-gen-abs-path.patch"))))
       (build-system copy-build-system)
       (arguments
        `(#:install-plan
