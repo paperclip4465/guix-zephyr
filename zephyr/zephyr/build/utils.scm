@@ -62,6 +62,8 @@ not accessible."
 	  '())
     ;; enable verbose output from builds
     "-DCMAKE_VERBOSE_MAKEFILE=ON"
+    ;; Only newlib is supported
+    "-DCONFIG_NEWLIB_LIBC=y"
     ,@(if board
 	  (list (string-append "-DBOARD=" board))
 	  '())
