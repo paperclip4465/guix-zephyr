@@ -3,6 +3,13 @@
 This channel provides a framework for using Guix as a West replacement
 for managing ZephyrRTOS based projects.
 
+* Moved to Codeberg
+
+This repository is now located on Codeberg at
+[[https://codeberg.org/MSchmeisser/guix-zephyr]].
+
+Please open any new issues over there.
+
 * Why?
 
 Guix provides a complete model of the system and provides an
