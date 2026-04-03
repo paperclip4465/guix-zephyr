@@ -1,4 +1,5 @@
 (channel
  (version 0)
  (directory "zephyr")
+ (news-file "etc/news.txt")
  (url "https://codeberg.org/MSchmeisser/guix-zephyr"))

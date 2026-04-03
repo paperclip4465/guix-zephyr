@@ -1,0 +1,28 @@
+;;; Guix Zephyr --- Functional package management for ZephyrRTOS
+;;; Copyright © 2026 Mitchell Schmeisser <mitchellschmeisser@librem.one>
+;;;
+;;; This file is NOT part of GNU Guix.
+;;;
+;;; GNU Guix is free software; you can redistribute it and/or modify it
+;;; under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 3 of the License, or (at
+;;; your option) any later version.
+;;;
+;;; GNU Guix is distributed in the hope that it will be useful, but
+;;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
+
+(channel-news
+ (version 0)
+ (entry (commit "7bc1199095c036d08ea21d9daf42f97224859912")
+        (title (en "Migrated to Codeberg"))
+        (body (en "guix-zephyr will follow the lead of Guix
+and migrate to Codeberg.
+
+Please use the new channel URL: https://codeberg.org/MSchmeisser/guix-zephyr"))))
+
+;; news.txt ends here
