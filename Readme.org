@@ -23,7 +23,7 @@ Add the following to your ~channels.scm~
   (cons*
    (channel
     (name 'guix-zephyr)
-    (url "https://github.com/paperclip4465/guix-zephyr")
+    (url "https://codeberg.org/MSchmeisser/guix-zephyr")
     ;; Enable signature verification:
     (introduction
      (make-channel-introduction
